@@ -118,31 +118,31 @@ preceded (if necessary) with a technical character that is similar to a diacriti
 
 ### betaCode Example
 
-**NB**: These are examples of converting betaCode to full transliteration and Arabic script. The very last paragraph showcases conversion of *ḥamzaŧ* in different positions.
+**NB**: These are examples of converting betaCode to full transliteration and Arabic script. The very last paragraph showcases conversion of *hamzaŧ* in different positions.
 
-q\_ala 'ab\_u Mas\`\_ud?i\*n :: 'an\_a qad sami\`tu h~a\_d\_a min ras\_ul?i All~ah?i ( \*sl\`m )
+q\_ala 'ab\_u Mas\`\_ud?i.n :: 'an\_a qad sami\`tu h~a\_d\_a min ras\_ul?i All~ah?i ( .sl\`m )
 
-\*hadda\_ta-n\_a \`Amr?u\*w bn?u R\_afi\`?i\*n , \*hadda\_ta-n\_a \`Abd?u All~ah?i bn?u al-Mub\_arak?i , \`an Mu\*hammad?i bn?i 'Is\*h\_aq?a , \`an Mu\*hammad?i bn?i ^Ga\`far?i\*n , \`an \`Ubayd?i All~ah?i bn?i \`Abd?i All~ah?i bn?i \`Umar?a , \`an 'Ab\_i-hi , \`an?i al-Nabiyy?i ( \*sl\`m ) na\*hwa-hu
+.hadda\_ta-n\_a \`Amr?u.w bn?u R\_afi\`?i.n , .hadda\_ta-n\_a \`Abd?u All~ah?i bn?u al-Mub\_arak?i , \`an Mu.hammad?i bn?i 'Is.h\_aq?a , \`an Mu.hammad?i bn?i ^Ga\`far?i.n , \`an \`Ubayd?i All~ah?i bn?i \`Abd?i All~ah?i bn?i \`Umar?a , \`an 'Ab\_i-hi , \`an?i al-Nabiyy?i ( .sl\`m ) na.hwa-hu
 
-'a\_hbara-n\_a Qutayba:t?u q\_ala , \*hadda\_ta-n\_a Sufy\_an?u , \`an Ya\*hy/a bn?i Sa\`\_id?i\*n , \`an 'Ab\_i Bakr?i bn?i Mu\*hammad?i\*n , \`an \`Umar?a bn?i \`Abd?i al-\`Az\_iz?i , \`an 'Ab\_i Bakr?i bn?i \`Abd?i al-Ra\*hm~an?i bn?i al-\*H\_ari\_t?i bn?i Hi^s\_am?i\*n , \`an 'Ab\_i Hurayra:t?a mi\_tla-hu
+'a\_hbara-n\_a Qutayba:t?u q\_ala , .hadda\_ta-n\_a Sufy\_an?u , \`an Ya.hy/a bn?i Sa\`\_id?i.n , \`an 'Ab\_i Bakr?i bn?i Mu.hammad?i.n , \`an \`Umar?a bn?i \`Abd?i al-\`Az\_iz?i , \`an 'Ab\_i Bakr?i bn?i \`Abd?i al-Ra.hm~an?i bn?i al-.H\_ari\_t?i bn?i Hi^s\_am?i.n , \`an 'Ab\_i Hurayra:t?a mi\_tla-hu
 
-**Ta\*hw\_il?u al-\*hamza:t?i ( kalim\_at?u\*n mufrada:t?u\*n )**
+**Ta.hw\_il?u al-hamza:t?i ( kalim\_at?u.n mufrada:t?u.n )**
 
-'amr?u\*n 'uns?u\*n 'ins?u\*n '\_im\_an?u\*n
-'\_aya:t?u\*n '\_amana mas'ala:t?u\*n sa'ala ra's?u\*n qur'\_an?u\*n ta'\_amara
-\_di'b?u\*n as'ila:t?u\*n q\_ari'i-hi su'l?u\*n mas'\_ul?u\*n
-tak\_afu'u-hu su'ila q\_ari'i-hi \_di'\_ab?u\*n ra'\_is?u\*n
-bu'isa ru'\_uf?u\*n ra'\_uf?u\*n su'\_al?u\*n mu'arri\_h?u\*n
-abn\_a'a-hu abn\_a'u-hu abn\_a'i-hi ^say'?a\*n \_ha\*t\_i'a:t?u\*n
-\*daw'u-hu \*d\_u'u-hu \*daw'a-hu \*daw'i-hi mur\_u'a:t?u\*n
-'abn\_a'i-hi bar\_i'u-hu s\_u'ila f\_il?u\*n f\_ann?u\*n f\_unn?u\*n
-s\_a'ala fu'\_ad?u\*n ^surak\_a'u-hu ri'\_asa:t?u\*n tahni'a:t?u\*n
-daf\_a'a:t?u\*n \*taff\_a'a:t?u\*n ta'r\_i\_h?u\*n fa'r?u\*n
-^say'?u\*n ^say'?i\*n ^say'?a\*n  \*daw'?u\*n \*daw'?i\*n \*daw'?a\*n
-juz'?u\*n  juz'?i\*n  juz'?a\*n mabda'?u\*n mabda'?i\*n mabda'?a\*n
-naba'a q\_ari'?u\*n tak\_afu'?u\*n tak\_afu'?i\*n tak\_afu'?a\*n
-abn\_a'u abn\_a'i abn\_a'a jar\_i'?u\*n maqr\_u'?u\*n \*daw'?u\*n ^say'?u\*n juz'?u\*n
-\`ulam\_a'u al-\`ulam\_a'i al-\`ulam\_a'a \`Amr?u\*n\*w wa-fa\`al\_u\*a
+'amr?u.n 'uns?u.n 'ins?u.n '\_im\_an?u.n
+'\_aya:t?u.n '\_amana mas'ala:t?u.n sa'ala ra's?u.n qur'\_an?u.n ta'\_amara
+\_di'b?u.n as'ila:t?u.n q\_ari'i-hi su'l?u.n mas'\_ul?u.n
+tak\_afu'u-hu su'ila q\_ari'i-hi \_di'\_ab?u.n ra'\_is?u.n
+bu'isa ru'\_uf?u.n ra'\_uf?u.n su'\_al?u.n mu'arri\_h?u.n
+abn\_a'a-hu abn\_a'u-hu abn\_a'i-hi ^say'?a.n \_ha.t\_i'a:t?u.n
+.daw'u-hu .d\_u'u-hu .daw'a-hu .daw'i-hi mur\_u'a:t?u.n
+'abn\_a'i-hi bar\_i'u-hu s\_u'ila f\_il?u.n f\_ann?u.n f\_unn?u.n
+s\_a'ala fu'\_ad?u.n ^surak\_a'u-hu ri'\_asa:t?u.n tahni'a:t?u.n
+daf\_a'a:t?u.n .taff\_a'a:t?u.n ta'r\_i\_h?u.n fa'r?u.n
+^say'?u.n ^say'?i.n ^say'?a.n  .daw'?u.n .daw'?i.n .daw'?a.n
+juz'?u.n  juz'?i.n  juz'?a.n mabda'?u.n mabda'?i.n mabda'?a.n
+naba'a q\_ari'?u.n tak\_afu'?u.n tak\_afu'?i.n tak\_afu'?a.n
+abn\_a'u abn\_a'i abn\_a'a jar\_i'?u.n maqr\_u'?u.n .daw'?u.n ^say'?u.n juz'?u.n
+\`ulam\_a'u al-\`ulam\_a'i al-\`ulam\_a'a \`Amr?u.n.w wa-fa\`al\_u.a
 
 ## betaCode converted into one-to-one translit
 
@@ -152,7 +152,7 @@ abn\_a'u abn\_a'i abn\_a'a jar\_i'?u\*n maqr\_u'?u\*n \*daw'?u\*n ^say'?u\*n juz
 
 ʾaḫbara-nā Ḳutaybaŧủ ḳāla , ḥaddaṯa-nā Sufyānủ , ʿan Yaḥyá bnỉ Saʿīdỉȵ , ʿan ʾAbī Bakrỉ bnỉ Muḥammadỉȵ , ʿan ʿUmarả bnỉ ʿAbdỉ al-ʿAzīzỉ , ʿan ʾAbī Bakrỉ bnỉ ʿAbdỉ al-Raḥmãnỉ bnỉ al-Ḥāriṯỉ bnỉ Hišāmỉȵ , ʿan ʾAbī Hurayraŧả miṯla-hu
 
-**Taḥwīlủ al-ḥamzaŧỉ ( kalimātủȵ mufradaŧủȵ )**
+**Taḥwīlủ al-hamzaŧỉ ( kalimātủȵ mufradaŧủȵ )**
 
 ʾamrủȵ ʾunsủȵ ʾinsủȵ ʾīmānủȵ
 ʾāyaŧủȵ ʾāmana masʾalaŧủȵ saʾala raʾsủȵ ḳurʾānủȵ taʾāmara
@@ -170,7 +170,7 @@ nabaʾa ḳāriʾủȵ takāfuʾủȵ takāfuʾỉȵ takāfuʾảȵ
 abnāʾu abnāʾi abnāʾa ǧarīʾủȵ maḳrūʾủȵ ḍawʾủȵ šayʾủȵ ǧuzʾủȵ
 ʿulamāʾu al-ʿulamāʾi al-ʿulamāʾa ʿAmrủȵů wa-faʿalūå
 
-### betaCode converted into arabic script
+### betaCode converted into Arabic script
 
 <p class="arabic">
 	
@@ -185,7 +185,7 @@ abnāʾu abnāʾi abnāʾa ǧarīʾủȵ maḳrūʾủȵ ḍawʾủȵ šayʾủ�
 </p>
 <p class="arabic">
 <b>
-تَحْوِيلُ الْحَمْزَةِ ( كَلِمَاتٌ مُفْرَدَةٌ )
+تَحْوِيلُ الْهَمْزَةِ ( كَلِمَاتٌ مُفْرَدَةٌ )
 </b>
 </p>
 <p class="arabic">
@@ -212,9 +212,9 @@ abnāʾu abnāʾi abnāʾa ǧarīʾủȵ maḳrūʾủȵ ḍawʾủȵ šayʾủ�
 
 NB: This is an example of the English text with terms, names and toponyms given in betaCode and automatically converted into different transliteration flavors (exerpts are from Brill’s *Encyclopaedia of Islam*).
 
-Dima^s\*k, Dima^s\*k al-^S\_am or simply al-^S\_am , (Lat. Damascus, Fr. Damas) is the largest city of Syria. It is situated ... very much at the same latitude as Ba\*gd\_ad and F\_as, at an altitude of nearly 700 metres, on the edge of the desert at the foot of ^Gabal \*K\_asiy\_un.
+Dima^s.k, Dima^s.k al-^S\_am or simply al-^S\_am , (Lat. Damascus, Fr. Damas) is the largest city of Syria. It is situated ... very much at the same latitude as Ba.gd\_ad and F\_as, at an altitude of nearly 700 metres, on the edge of the desert at the foot of ^Gabal .K\_asiy\_un.
 
-al-\_Dahab\_i, ^Sams al-D\_in Ab\_u \`Abd All~ah Mu\*hammad b. \`U\_tm\_an b. \*K\_aym\_a\*z b. \`Abd All~ah al-Turkum\_an\_i al-F\_ari\*k\_i al-Dima^s\*k\_i al-^S\_afi\`\_i, an Arab historian and theologian, was born at Damascus or at Mayy\_afari\*k\_in on 1 or 3 Rab\_i\` II (according to al-Kutub\_i, in Rab\_i\` I) 673/5 or 7 October 1274, and died at Damascus, according to al-Subk\_i and al-Suy\_u\*t\_i, in the night of Sunday-Monday on 3 \_D\_u al-\*Ka\`da:t 748/4 February 1348, or, according to A\*hmad b. \`Iy\_as, in 753/1352-3. He was buried at the B\_ab al-\*Sa.g\_ir.
+al-\_Dahab\_i, ^Sams al-D\_in Ab\_u \`Abd All~ah Mu.hammad b. \`U\_tm\_an b. .K\_aym\_a.z b. \`Abd All~ah al-Turkum\_an\_i al-F\_ari.k\_i al-Dima^s.k\_i al-^S\_afi\`\_i, an Arab historian and theologian, was born at Damascus or at Mayy\_afari.k\_in on 1 or 3 Rab\_i\` II (according to al-Kutub\_i, in Rab\_i\` I) 673/5 or 7 October 1274, and died at Damascus, according to al-Subk\_i and al-Suy\_u.t\_i, in the night of Sunday-Monday on 3 \_D\_u al-.Ka\`da:t 748/4 February 1348, or, according to A.hmad b. \`Iy\_as, in 753/1352-3. He was buried at the B\_ab al-.Sa.g\_ir.
 
 ### betaCode converted into one-to-one translit
 
