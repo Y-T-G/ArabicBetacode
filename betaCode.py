@@ -11,6 +11,20 @@ import betaCodeTables
 #   - tagging Arabic words
 #   - tagging Arabic text
 
+def deNoise(text):
+    noise = re.compile(""" ّ    | # Tashdid
+                             َ    | # Fatha
+                             ً    | # Tanwin Fath
+                             ُ    | # Damma
+                             ٌ    | # Tanwin Damm
+                             ِ    | # Kasra
+                             ٍ    | # Tanwin Kasr
+                             ْ    | # Sukun
+                             ٰ    | # Dagger Alif
+                             ـ     # Tatwil/Kashida
+                         """, re.VERBOSE)
+    text = re.sub(noise, '', text)
+    return(text)
 
 # define replacement with dictionaries
 def dictReplace(text, dic):
@@ -57,8 +71,8 @@ def arabicToBetaCode(text):
     #print("arabicToBetaCode()")
 
     # convert optative phrases    
-    text = re.sub(r"صلى الله عليه وسلم", r"*sl`m", text)
-    text = re.sub(r"radiyallahuanhu", r"r*dh", text)
+    text = re.sub(r"صلى الله عليه وسلم", r".sl`m", text)
+    text = re.sub(r"radiyallahuanhu", r"r.dh", text)
 
     text = dictReplace(text, betaCodeTables.arabicBetaCode)
     
@@ -104,16 +118,24 @@ def betacodeToArabic(text):
 
     text = re.sub("allãh", " ﭐلـلّٰـه ".strip(), text) # Convert God's Name
     # need to add "bi-Ll~ah?i"
-    text = re.sub(r"li-llãhỉ", " لِـلّٰـهِ ".strip(), text) # Convert God's Name
-    text = re.sub(r"bi-llãhỉ", " بِالـلّٰـهِ ".strip(), text) # Convert God's Name
+    text = re.sub(r"li-llãhi", " لِـلّٰـهِ ".strip(), text) # Convert God's Name
     text = re.sub(r"\bb\.", "بن", text) # Convert b. into ar bn
 
     text  = re.sub(",", "،", text) # Convert commas
 
     # initial HAMZAs
-    text = re.sub("\\bʾ?a", "أَ", text)
-    text = re.sub("\\bʾ?i", "إِ", text)
-    text = re.sub("\\bʾ?u", "أُ", text)
+##    text = re.sub("\\bʾ?a", "أَ", text)
+##    text = re.sub("\\bʾ?i", "إِ", text)
+##    text = re.sub("\\bʾ?u", "أُ", text)
+
+    text = re.sub("\\ba", "اَ", text)
+    text = re.sub("\\bi", "اِ", text)
+    text = re.sub("\\bu", "اُ", text)
+    
+    text = re.sub("\\bʾa", "أَ", text)
+    text = re.sub("\\bʾi", "إِ", text)
+    text = re.sub("\\bʾu", "أُ", text)
+    
     text = re.sub("\\bʾ?ā", "آ", text)
     text = re.sub("\\bʾ?ī", "إِي", text)
     text = re.sub("\\bʾ?ū", "أُو", text)
@@ -236,6 +258,11 @@ def betacodeToArabic(text):
     #text = re.sub("-", "ـ ـ", text)
     return(text)
 
+def betaCodeToArSimple(text):
+    text = betacodeToArabic(text)
+    text = deNoise(text)
+    return(text)
+    
 
 ###########################################################
 # BELOW : TESTING ZONE ####################################
@@ -258,24 +285,24 @@ def betacodeToArabic(text):
 ##print(betacodeToArabic(testString))
 ##
 ##testBetaCode = """
-##'amru*n 'unsu*n 'insu*n '_im_anu*n
-##'_aya=tu*n '_amana mas'ala=tu*n sa'ala ra'su*n qur'_anu*n ta'_amara
-##_di'bu*n as'ila=tu*n q_ari'i-hi su'lu*n mas'_ulu*n
-##tak_afu'u-hu su'ila q_ari'i-hi _di'_abu*n ra'_isu*n
-##bu'isa ru'_ufu*n ra'_ufu*n su'_alu*n mu'arri_hu*n
-##abn_a'a-hu abn_a'u-hu abn_a'i-hi ^say'a*n _ha*t_i'a=tu*n
-##*daw'u-hu *d_u'u-hu *daw'a-hu *daw'i-hi mur_u'a=tu*n
-##'abn_a'i-hi bar_i'u-hu s_u'ila f_ilu*n f_annu*n f_unnu*n
-##s_a'ala fu'_adu*n ^surak_a'u-hu ri'_asa=tu*n tahni'a=tu*n
-##daf_a'a=tu*n *taff_a'a=tu*n ta'r_i_hu*n fa'ru*n
-##^say'u*n ^say'i*n ^say'a*n  
-##*daw'u*n *daw'i*n *daw'a*n
-##juz'u*n  juz'i*n  juz'a*n
-##mabda'u*n mabda'i*n mabda'a*n
-##naba'a q_ari'u*n tak_afu'u*n tak_afu'i*n tak_afu'a*n
-##abn_a'u abn_a'i abn_a'a jar_i'u*n maqr_u'u*n *daw'u*n ^say'u*n juz'u*n
+##'amru.n 'unsu.n 'insu.n '_im_anu.n
+##'_aya:tu.n '_amana mas'ala:tu.n sa'ala ra'su.n qur'_anu.n ta'_amara
+##_di'bu.n as'ila:tu.n q_ari'i-hi su'lu.n mas'_ulu.n
+##tak_afu'u-hu su'ila q_ari'i-hi _di'_abu.n ra'_isu.n
+##bu'isa ru'_ufu.n ra'_ufu.n su'_alu.n mu'arri_hu.n
+##abn_a'a-hu abn_a'u-hu abn_a'i-hi ^say'a.n _ha.t_i'a:tu.n
+##.daw'u-hu .d_u'u-hu .daw'a-hu .daw'i-hi mur_u'a:tu.n
+##'abn_a'i-hi bar_i'u-hu s_u'ila f_ilu.n f_annu.n f_unnu.n
+##s_a'ala fu'_adu.n ^surak_a'u-hu ri'_asa:tu.n tahni'a:tu.n
+##daf_a'a:tu.n .taff_a'a:tu.n ta'r_i_hu.n fa'ru.n
+##^say'u.n ^say'i.n ^say'a.n  
+##.daw'u.n .daw'i.n .daw'a.n
+##juz'u.n  juz'i.n  juz'a.n
+##mabda'u.n mabda'i.n mabda'a.n
+##naba'a q_ari'u.n tak_afu'u.n tak_afu'i.n tak_afu'a.n
+##abn_a'u abn_a'i abn_a'a jar_i'u.n maqr_u'u.n .daw'u.n ^say'u.n juz'u.n
 ##`ulam_a'u al-`ulam_a'i al-`ulam_a'a
-##`Amru*n*w wa-fa`al_u*a
+##`Amru.n.w wa-fa`al_u.a
 ##"""
 ##
 ###print(arabicToBetaCode(testStringArabic))
