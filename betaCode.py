@@ -85,7 +85,8 @@ def arabicToBetaCode(text, paleo=False):
     text = re.sub(r"،", r",", text)
 
     # fixing artifacts
-    text = re.sub(r"\b_a", r"a", text)
+    #text = re.sub(r"\b_a", r"a", text) # this also turns '_a into 'a
+    text = re.sub(r"(?<!')\b_a", r"a", text)
     text = re.sub(r"aa", r"a", text)
     text = re.sub(r"ii", r"i", text)
     text = re.sub(r"uu", r"u", text)
@@ -324,7 +325,7 @@ testtext = "_amḥān _amm_u*n *bubur?os"
 testtext = betacodeToArabic(testtext, paleo=True)
 print(testtext)
 #testtext = "آمن آمں ٮُبُرْس"
-testtext = arabicToBetaCode(testtext, paleo=False)
+testtext = arabicToBetaCode(testtext, paleo=True)
 print(testtext)
 testtext = betacodeToArabic(testtext, paleo=True)
 print(testtext)
