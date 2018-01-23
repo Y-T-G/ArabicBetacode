@@ -6,6 +6,7 @@
 A paleography mode was added, in which sukūns, vowels and other diacritics are not automatically added in transcription and Arabic script, and users have the possibility to manually add sukūns. The betacodeToArabic and arabicToBetaCode functions now have an optional argument paleo that, if set to True, disables the automatic creation of sukūns and vowels apart from those that are explicitly transcribed. In paleo mode, use simple a or i at the beginning of a word to transcribe a bare alif without vowels, hamza, madda or waṣla. The default setting for paleo is False, so that the code is by default executed exactly as before.
 
 The following new characters were also added: 
+
 | betacode | translit | Arabic letter |
 |----------|-----------------|---------------|
 | **?b** | ɓ | undotted *bāʾ/tāʾ/thāʾ* and non-final *yāʾ/nūn* |
