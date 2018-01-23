@@ -7,7 +7,7 @@ A paleography mode was added, in which sukūns, vowels and other diacritics are 
 
 The following new characters were also added: 
 | betacode | translit | Arabic letter |
-|----------|-----------------|-----------------------------|
+|----------|-----------------|---------------|
 | **?b** | ɓ | undotted *bāʾ/tāʾ/thāʾ* and non-final *yāʾ/nūn* |
 | **?n** | ɲ | undotted final *nūn* |
 | **?f** | ƒ | undotted *fāʾ* |
