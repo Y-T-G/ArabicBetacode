@@ -72,10 +72,10 @@ betacodeTranslit = {
     '*w' : 'ů',  # silent w, like in `Amru.n.w
     '*a' : 'å',  # silent alif, like in fa`al_u.a    
 # Paleo: Dotless letters
-    "*b" :  "ɓ",   # dotless b/t/th and non-final nūn/yāʾ
-    "*q" :  "ɋ",   # dotless qāf
-    "*n" :  "ɲ",   # dotless final nūn
-    "*f" :  "ƒ",   # dotless fāʾ
+    "?b" :  "ɓ",   # dotless b/t/th and non-final nūn/yāʾ
+    "?q" :  "ɋ",   # dotless qāf
+    "?n" :  "ɲ",   # dotless final nūn
+    "?f" :  "ƒ",   # dotless fāʾ
     }
 
 # conventional US/LOC transliteration
@@ -236,7 +236,9 @@ translitArabic = {
     'å' : ' ا ',  # silent alif, like in fa`al_u.a
     'ả' : ' َ ',  # final fatḥaŧ
     'ỉ' : ' ِ ',  # final ḍammaŧ
-    'ủ' : ' ُ ',  # final kasraŧ 
+    'ủ' : ' ُ ',  # final kasraŧ
+# Paleo: explicit sukūn
+    '°' : ' ْ ',  # explicit sukūn
 # Paleo: Dotless letters
     "ɓ" : " ٮ",   # dotless b/t/th and non-final nūn/yāʾ
     "ɋ" : " ٯ",   # dotless qāf
@@ -293,8 +295,8 @@ arabicBetaCode = {
     " ٌ " :  "u*n", # tanwīn ḍamm
     " ٍ " :  "i*n", # tanwīn kasr
 # Paleo: Dotless letters
-    " ٮ" :  "*b",   # dotless b/t/th and non-final nūn/yāʾ
-    " ٯ" :  "*q",   # dotless qāf
-    " ں" :  "*n",   # dotless final nūn
-    " ڡ" :  "*f",   # dotless fāʾ
+    " ٮ" :  "?b",   # dotless b/t/th and non-final nūn/yāʾ
+    " ٯ" :  "?q",   # dotless qāf
+    " ں" :  "?n",   # dotless final nūn
+    " ڡ" :  "?f",   # dotless fāʾ
     }
