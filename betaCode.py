@@ -86,7 +86,7 @@ def arabicToBetaCode(text, paleo=False):
 
     # fixing artifacts
     #text = re.sub(r"\b_a", r"a", text) # this also turns '_a into 'a
-    text = re.sub(r"(?<!')\b_a", r"a", text)
+    text = re.sub(r"(?<!')\b_a", r"a", text) # use negative lookbehind to exclude '_a
     text = re.sub(r"aa", r"a", text)
     text = re.sub(r"ii", r"i", text)
     text = re.sub(r"uu", r"u", text)
@@ -113,8 +113,7 @@ def betacodeToArabic(text, paleo=False):
 
     #print("betacodeToArabic()")
     text = dictReplace(text, betaCodeTables.betacodeTranslit)
-    if paleo:
-        text = re.sub('\?o' , '°', text)
+    text = re.sub('\?o' , '°', text)
     text = re.sub('\+' , '', text)
 
     # fix irrelevant variables for Arabic script
@@ -142,8 +141,15 @@ def betacodeToArabic(text, paleo=False):
 ##    text = re.sub("\\bʾ?i", "إِ", text)
 ##    text = re.sub("\\bʾ?u", "أُ", text)
 
-    text = re.sub("\\ba", "اَ", text)
-    text = re.sub("\\bi", "اِ", text)
+    
+    if not paleo:
+        text = re.sub("\\ba", "اَ", text)
+        text = re.sub("\\bi", "اِ", text)
+    else:
+        text = re.sub("\\baa", "اَ", text)
+        text = re.sub("\\bii", "اِ", text)
+        text = re.sub("\\b[ai]", "ا", text) # allow transcription of simple initial alif
+
     text = re.sub("\\bu", "اُ", text)
     
     text = re.sub("\\bʾa", "أَ", text)
@@ -321,10 +327,12 @@ abn_a'u abn_a'i abn_a'a jar_i'u*n maqr_u'u*n *daw'u*n ^say'u*n juz'u*n
 """
 ##
 ###print(arabicToBetaCode(testStringArabic))
-testtext = "_amḥān _amm_u*n *bubur?os"
+print(betacodeToArabic(testBetaCode))
+print(betacodeToTranslit(testBetaCode))
+testtext = "_amḥān iimm_u?n ?bubur?os"
 testtext = betacodeToArabic(testtext, paleo=True)
 print(testtext)
-#testtext = "آمن آمں ٮُبُرْس"
+#testtext = "امن آمں ٮُبُرْس"
 testtext = arabicToBetaCode(testtext, paleo=True)
 print(testtext)
 testtext = betacodeToArabic(testtext, paleo=True)
