@@ -284,27 +284,27 @@ def betaCodeToArSimple(text):
 ##print(betacodeToLOC(testString))
 ##print(betacodeToArabic(testString))
 ##
-##testBetaCode = """
-##'amru.n 'unsu.n 'insu.n '_im_anu.n
-##'_aya:tu.n '_amana mas'ala:tu.n sa'ala ra'su.n qur'_anu.n ta'_amara
-##_di'bu.n as'ila:tu.n q_ari'i-hi su'lu.n mas'_ulu.n
-##tak_afu'u-hu su'ila q_ari'i-hi _di'_abu.n ra'_isu.n
-##bu'isa ru'_ufu.n ra'_ufu.n su'_alu.n mu'arri_hu.n
-##abn_a'a-hu abn_a'u-hu abn_a'i-hi ^say'a.n _ha.t_i'a:tu.n
-##.daw'u-hu .d_u'u-hu .daw'a-hu .daw'i-hi mur_u'a:tu.n
-##'abn_a'i-hi bar_i'u-hu s_u'ila f_ilu.n f_annu.n f_unnu.n
-##s_a'ala fu'_adu.n ^surak_a'u-hu ri'_asa:tu.n tahni'a:tu.n
-##daf_a'a:tu.n .taff_a'a:tu.n ta'r_i_hu.n fa'ru.n
-##^say'u.n ^say'i.n ^say'a.n  
-##.daw'u.n .daw'i.n .daw'a.n
-##juz'u.n  juz'i.n  juz'a.n
-##mabda'u.n mabda'i.n mabda'a.n
-##naba'a q_ari'u.n tak_afu'u.n tak_afu'i.n tak_afu'a.n
-##abn_a'u abn_a'i abn_a'a jar_i'u.n maqr_u'u.n .daw'u.n ^say'u.n juz'u.n
-##`ulam_a'u al-`ulam_a'i al-`ulam_a'a
-##`Amru.n.w wa-fa`al_u.a
-##"""
+testBetaCode = """
+'amru*n 'unsu*n 'insu*n '_im_anu*n
+'_aya=tu*n '_amana mas'ala=tu*n sa'ala ra'su*n qur'_anu*n ta'_amara
+_di'bu*n as'ila=tu*n q_ari'i-hi su'lu*n mas'_ulu*n
+tak_afu'u-hu su'ila q_ari'i-hi _di'_abu*n ra'_isu*n
+bu'isa ru'_ufu*n ra'_ufu*n su'_alu*n mu'arri_hu*n
+abn_a'a-hu abn_a'u-hu abn_a'i-hi ^say'a*n _ha*t_i'a=tu*n
+*daw'u-hu *d_u'u-hu *daw'a-hu *daw'i-hi mur_u'a=tu*n
+'abn_a'i-hi bar_i'u-hu s_u'ila f_ilu*n f_annu*n f_unnu*n
+s_a'ala fu'_adu*n ^surak_a'u-hu ri'_asa=tu*n tahni'a=tu*n
+daf_a'a:tu*n *taff_a'a=tu*n ta'r_i_hu*n fa'ru*n
+^say'u*n ^say'i*n ^say'a*n  
+*daw'u*n *daw'i*n *daw'a*n
+juz'u*n  juz'i*n  juz'a*n
+mabda'u*n mabda'i*n mabda'a*n
+naba'a q_ari'u*n tak_afu'u*n tak_afu'i*n tak_afu'a*n
+abn_a'u abn_a'i abn_a'a jar_i'u*n maqr_u'u*n *daw'u*n ^say'u*n juz'u*n
+`ulam_a'u al-`ulam_a'i al-`ulam_a'a
+`Amru*n*w wa-fa`al_u*a
+"""
 ##
 ###print(arabicToBetaCode(testStringArabic))
-##print(betacodeToArabic(testBetaCode))
-##print(betacodeToTranslit(testBetaCode))
+print(betacodeToArabic(testBetaCode))
+print(betacodeToTranslit(testBetaCode))
