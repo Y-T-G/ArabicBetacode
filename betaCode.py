@@ -67,7 +67,7 @@ def betacodeToLOC(text):
     text = re.sub(r"\w_", r"", text)
     return(text)
 
-def arabicToBetaCode(text):
+def arabicToBetaCode(text, paleo=False):
     #print("arabicToBetaCode()")
 
     # convert optative phrases    
@@ -78,7 +78,10 @@ def arabicToBetaCode(text):
     
     # converting tashdids and removing Arabic residue
     text = re.sub(r"(\w)%s" % " ّ ".strip(), r"\1\1", text)
-    text = re.sub(" ْ ".strip(), r"", text)
+    if not paleo:
+        text = re.sub(" ْ ".strip(), r"", text)
+    else: # keep explicit sukuns
+        text = re.sub(" ْ ".strip(), r"?o", text)
     text = re.sub(r"،", r",", text)
 
     # fixing artifacts
@@ -308,3 +311,7 @@ abn_a'u abn_a'i abn_a'a jar_i'u*n maqr_u'u*n *daw'u*n ^say'u*n juz'u*n
 ###print(arabicToBetaCode(testStringArabic))
 print(betacodeToArabic(testBetaCode))
 print(betacodeToTranslit(testBetaCode))
+
+testtext = "آمن آمں ٮُبُرْس"
+testtext = arabicToBetaCode(testtext, paleo=True)
+print(testtext)
