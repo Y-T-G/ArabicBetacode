@@ -106,6 +106,8 @@ def betacodeToArabic(text, paleo=False):
     """
     
     cnsnnts = "btṯǧčḥḥḫdḏrzsšṣḍṭẓʿġfḳkglmnhwy"
+    if paleo:
+        cnsnnts += "ƒɋɲɓ" # placeholders for undotted letters f, q, n, b
     cnsnnts = "%s%s" % (cnsnnts, cnsnnts.upper())
 
     #print("betacodeToArabic()")
@@ -318,11 +320,11 @@ abn_a'u abn_a'i abn_a'a jar_i'u*n maqr_u'u*n *daw'u*n ^say'u*n juz'u*n
 """
 ##
 ###print(arabicToBetaCode(testStringArabic))
-print(betacodeToArabic(testBetaCode))
-print(betacodeToTranslit(testBetaCode))
-
-testtext = "آمن آمں ٮُبُرْس"
-testtext = arabicToBetaCode(testtext, paleo=True)
+testtext = "_amḥān _amm_u*n *bubur?os"
+testtext = betacodeToArabic(testtext, paleo=True)
+print(testtext)
+#testtext = "آمن آمں ٮُبُرْس"
+testtext = arabicToBetaCode(testtext, paleo=False)
 print(testtext)
 testtext = betacodeToArabic(testtext, paleo=True)
 print(testtext)
