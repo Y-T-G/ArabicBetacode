@@ -8,11 +8,11 @@ A paleography mode was added, in which sukūns, vowels and other diacritics are 
 The following new characters were also added: 
 | betacode | translit | Arabic letter |
 |----------|-----------------|-----------------------------|
-| **?b** | ɓ | *undotted b/t/th and non-final y/n* |
-| **?n** | ɲ| *undotted final n* |
-| **?f** | ƒ | *undotted fāʾ* |
-| **?q** | ɋ | *undotted qāf* |
-| **?o** | ° | *explicit sukūn* |
+| **?b** | ɓ | undotted *bāʾ/tāʾ/thāʾ* and non-final *yāʾ/nūn* |
+| **?n** | ɲ | undotted final *nūn* |
+| **?f** | ƒ | undotted *fāʾ* |
+| **?q** | ɋ | undotted *qāf* |
+| **?o** | ° | explicit *sukūn* |
 
 NB: no standard symbols appear to exist for transcribing undotted letters.
 
