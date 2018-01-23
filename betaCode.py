@@ -98,12 +98,20 @@ def arabicToBetaCode(text, paleo=False):
     return(text)
 
 
-def betacodeToArabic(text):
+def betacodeToArabic(text, paleo=False):
+    """transcribe betacode to Arabic.
+    var paleo: if set to True:
+        - sukuns and vowels are only inserted when they are explicitly encoded
+        - dotless letters are added to the consonants
+    """
+    
     cnsnnts = "btṯǧčḥḥḫdḏrzsšṣḍṭẓʿġfḳkglmnhwy"
     cnsnnts = "%s%s" % (cnsnnts, cnsnnts.upper())
 
     #print("betacodeToArabic()")
     text = dictReplace(text, betaCodeTables.betacodeTranslit)
+    if paleo:
+        text = re.sub('\?o' , '°', text)
     text = re.sub('\+' , '', text)
 
     # fix irrelevant variables for Arabic script
@@ -235,15 +243,16 @@ def betacodeToArabic(text):
 
     # consonant combinations
     text = re.sub(r"([%s])\1" % cnsnnts, r"\1" + " ّ ".strip(), text)
-    # two consonants into C-sukun-C
-    text = re.sub(r"([%s])([%s])" % (cnsnnts,cnsnnts), r"\1%s\2" % " ْ ".strip(), text)
-    text = re.sub(r"([%s])([%s])" % (cnsnnts,cnsnnts), r"\1%s\2" % " ْ ".strip(), text)
-    # final consonant into C-sukun
-    text = re.sub(r"([%s])(\s|$)" % (cnsnnts), r"\1%s\2" % " ْ ".strip(), text)
-    # consonant + long vowel into C-shortV-longV
-    text = re.sub(r"([%s])(ā)" % (cnsnnts), r"\1%s\2" % " َ ".strip(), text)
-    text = re.sub(r"([%s])(ī)" % (cnsnnts), r"\1%s\2" % " ِ ".strip(), text)
-    text = re.sub(r"([%s])(ū)" % (cnsnnts), r"\1%s\2" % " ُ ".strip(), text)
+    if not paleo:
+        # two consonants into C-sukun-C
+        text = re.sub(r"([%s])([%s])" % (cnsnnts,cnsnnts), r"\1%s\2" % " ْ ".strip(), text)
+        text = re.sub(r"([%s])([%s])" % (cnsnnts,cnsnnts), r"\1%s\2" % " ْ ".strip(), text)
+        # final consonant into C-sukun
+        text = re.sub(r"([%s])(\s|$)" % (cnsnnts), r"\1%s\2" % " ْ ".strip(), text)
+        # consonant + long vowel into C-shortV-longV
+        text = re.sub(r"([%s])(ā)" % (cnsnnts), r"\1%s\2" % " َ ".strip(), text)
+        text = re.sub(r"([%s])(ī)" % (cnsnnts), r"\1%s\2" % " ِ ".strip(), text)
+        text = re.sub(r"([%s])(ū)" % (cnsnnts), r"\1%s\2" % " ُ ".strip(), text)
 
     # tanwins
     text = re.sub(r'([%s])aȵ' % "btṯǧḥḥḫdḏrzsšṣḍṭẓʿġfḳklmnhwy", r"\1%s" % 'اً', text)
@@ -314,4 +323,6 @@ print(betacodeToTranslit(testBetaCode))
 
 testtext = "آمن آمں ٮُبُرْس"
 testtext = arabicToBetaCode(testtext, paleo=True)
+print(testtext)
+testtext = betacodeToArabic(testtext, paleo=True)
 print(testtext)
