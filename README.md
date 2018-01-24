@@ -1,4 +1,22 @@
-# Arabic betaCode
+﻿# Arabic betaCode
+
+
+## Paleography updates (2018-01-23)
+
+A paleography mode was added, in which sukūns, vowels and other diacritics are not automatically added in transcription and Arabic script, and users have the possibility to manually add sukūns. The betacodeToArabic and arabicToBetaCode functions now have an optional argument paleo that, if set to True, disables the automatic creation of sukūns and vowels apart from those that are explicitly transcribed. In paleo mode, use simple a or i at the beginning of a word to transcribe a bare alif without vowels, hamza, madda or waṣla. The default setting for paleo is False, so that the code is by default executed exactly as before.
+
+The following new characters were also added: 
+
+| betacode | translit | Arabic letter |
+|----------|-----------------|---------------|
+| **?b** | ɓ | undotted *bāʾ/tāʾ/thāʾ* and non-final *yāʾ/nūn* |
+| **?n** | ɲ | undotted final *nūn* |
+| **?f** | ƒ | undotted *fāʾ* |
+| **?q** | ɋ | undotted *qāf* |
+| **?o** | ° | explicit *sukūn* |
+
+NB: no standard symbols appear to exist for transcribing undotted letters.
+
 
 ## Some updates to the scheme (2015-03-09:10-21)
 
@@ -6,6 +24,7 @@ Done to avoid issues with Alpheios translation alignment, which automatically sp
 
 * **=t** is *tāʾ marbūṭaŧ*
 * **\*s** is *ṣād* (and the same for other letters transliterated with dots)
+
 
 <center>[a better formatted version](http://maximromanov.github.io/2015/02-07.html)</center>
 
@@ -104,6 +123,8 @@ preceded (if necessary) with a technical character that is similar to a diacriti
 * silent *wāw* and *alif*:
 	* `*w` (`Amr?u*n*w`, for <span="arabic">عَمْرٌو</span>)
 	* `*a` (```wa-fa`al_u*a```, for <span="arabic">وَفَعَلُوا</span>)
+* bare initial alif (without vowels, hamza, wasla, madda): in paleo mode only:
+        * ```a``` or ```i``` 
 
 ## Running the converter
 * (Python 3.xx must be installed on the machine)

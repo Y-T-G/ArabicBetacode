@@ -67,7 +67,7 @@ def betacodeToLOC(text):
     text = re.sub(r"\w_", r"", text)
     return(text)
 
-def arabicToBetaCode(text):
+def arabicToBetaCode(text, paleo=False):
     #print("arabicToBetaCode()")
 
     # convert optative phrases    
@@ -78,11 +78,15 @@ def arabicToBetaCode(text):
     
     # converting tashdids and removing Arabic residue
     text = re.sub(r"(\w)%s" % " ّ ".strip(), r"\1\1", text)
-    text = re.sub(" ْ ".strip(), r"", text)
+    if not paleo:
+        text = re.sub(" ْ ".strip(), r"", text)
+    else: # keep explicit sukuns
+        text = re.sub(" ْ ".strip(), r"?o", text)
     text = re.sub(r"،", r",", text)
 
     # fixing artifacts
-    text = re.sub(r"\b_a", r"a", text)
+    #text = re.sub(r"\b_a", r"a", text) # this also turns '_a into 'a
+    text = re.sub(r"(?<!')\b_a", r"a", text) # use negative lookbehind to exclude '_a
     text = re.sub(r"aa", r"a", text)
     text = re.sub(r"ii", r"i", text)
     text = re.sub(r"uu", r"u", text)
@@ -95,12 +99,21 @@ def arabicToBetaCode(text):
     return(text)
 
 
-def betacodeToArabic(text):
+def betacodeToArabic(text, paleo=False):
+    """transcribe betacode to Arabic.
+    var paleo: if set to True:
+        - sukuns and vowels are only inserted when they are explicitly encoded
+        - dotless letters are added to the consonants
+    """
+    
     cnsnnts = "btṯǧčḥḥḫdḏrzsšṣḍṭẓʿġfḳkglmnhwy"
+    if paleo:
+        cnsnnts += "ƒɋɲɓ" # placeholders for undotted letters f, q, n, b
     cnsnnts = "%s%s" % (cnsnnts, cnsnnts.upper())
 
     #print("betacodeToArabic()")
     text = dictReplace(text, betaCodeTables.betacodeTranslit)
+    text = re.sub('\?o' , '°', text)
     text = re.sub('\+' , '', text)
 
     # fix irrelevant variables for Arabic script
@@ -128,8 +141,15 @@ def betacodeToArabic(text):
 ##    text = re.sub("\\bʾ?i", "إِ", text)
 ##    text = re.sub("\\bʾ?u", "أُ", text)
 
-    text = re.sub("\\ba", "اَ", text)
-    text = re.sub("\\bi", "اِ", text)
+    
+    if not paleo:
+        text = re.sub("\\ba", "اَ", text)
+        text = re.sub("\\bi", "اِ", text)
+    else:
+        text = re.sub("\\baa", "اَ", text)
+        text = re.sub("\\bii", "اِ", text)
+        text = re.sub("\\b[ai]", "ا", text) # allow transcription of simple initial alif
+
     text = re.sub("\\bu", "اُ", text)
     
     text = re.sub("\\bʾa", "أَ", text)
@@ -232,15 +252,16 @@ def betacodeToArabic(text):
 
     # consonant combinations
     text = re.sub(r"([%s])\1" % cnsnnts, r"\1" + " ّ ".strip(), text)
-    # two consonants into C-sukun-C
-    text = re.sub(r"([%s])([%s])" % (cnsnnts,cnsnnts), r"\1%s\2" % " ْ ".strip(), text)
-    text = re.sub(r"([%s])([%s])" % (cnsnnts,cnsnnts), r"\1%s\2" % " ْ ".strip(), text)
-    # final consonant into C-sukun
-    text = re.sub(r"([%s])(\s|$)" % (cnsnnts), r"\1%s\2" % " ْ ".strip(), text)
-    # consonant + long vowel into C-shortV-longV
-    text = re.sub(r"([%s])(ā)" % (cnsnnts), r"\1%s\2" % " َ ".strip(), text)
-    text = re.sub(r"([%s])(ī)" % (cnsnnts), r"\1%s\2" % " ِ ".strip(), text)
-    text = re.sub(r"([%s])(ū)" % (cnsnnts), r"\1%s\2" % " ُ ".strip(), text)
+    if not paleo:
+        # two consonants into C-sukun-C
+        text = re.sub(r"([%s])([%s])" % (cnsnnts,cnsnnts), r"\1%s\2" % " ْ ".strip(), text)
+        text = re.sub(r"([%s])([%s])" % (cnsnnts,cnsnnts), r"\1%s\2" % " ْ ".strip(), text)
+        # final consonant into C-sukun
+        text = re.sub(r"([%s])(\s|$)" % (cnsnnts), r"\1%s\2" % " ْ ".strip(), text)
+        # consonant + long vowel into C-shortV-longV
+        text = re.sub(r"([%s])(ā)" % (cnsnnts), r"\1%s\2" % " َ ".strip(), text)
+        text = re.sub(r"([%s])(ī)" % (cnsnnts), r"\1%s\2" % " ِ ".strip(), text)
+        text = re.sub(r"([%s])(ū)" % (cnsnnts), r"\1%s\2" % " ُ ".strip(), text)
 
     # tanwins
     text = re.sub(r'([%s])aȵ' % "btṯǧḥḥḫdḏrzsšṣḍṭẓʿġfḳklmnhwy", r"\1%s" % 'اً', text)
@@ -284,27 +305,35 @@ def betaCodeToArSimple(text):
 ##print(betacodeToLOC(testString))
 ##print(betacodeToArabic(testString))
 ##
-##testBetaCode = """
-##'amru.n 'unsu.n 'insu.n '_im_anu.n
-##'_aya:tu.n '_amana mas'ala:tu.n sa'ala ra'su.n qur'_anu.n ta'_amara
-##_di'bu.n as'ila:tu.n q_ari'i-hi su'lu.n mas'_ulu.n
-##tak_afu'u-hu su'ila q_ari'i-hi _di'_abu.n ra'_isu.n
-##bu'isa ru'_ufu.n ra'_ufu.n su'_alu.n mu'arri_hu.n
-##abn_a'a-hu abn_a'u-hu abn_a'i-hi ^say'a.n _ha.t_i'a:tu.n
-##.daw'u-hu .d_u'u-hu .daw'a-hu .daw'i-hi mur_u'a:tu.n
-##'abn_a'i-hi bar_i'u-hu s_u'ila f_ilu.n f_annu.n f_unnu.n
-##s_a'ala fu'_adu.n ^surak_a'u-hu ri'_asa:tu.n tahni'a:tu.n
-##daf_a'a:tu.n .taff_a'a:tu.n ta'r_i_hu.n fa'ru.n
-##^say'u.n ^say'i.n ^say'a.n  
-##.daw'u.n .daw'i.n .daw'a.n
-##juz'u.n  juz'i.n  juz'a.n
-##mabda'u.n mabda'i.n mabda'a.n
-##naba'a q_ari'u.n tak_afu'u.n tak_afu'i.n tak_afu'a.n
-##abn_a'u abn_a'i abn_a'a jar_i'u.n maqr_u'u.n .daw'u.n ^say'u.n juz'u.n
-##`ulam_a'u al-`ulam_a'i al-`ulam_a'a
-##`Amru.n.w wa-fa`al_u.a
-##"""
+testBetaCode = """
+'amru*n 'unsu*n 'insu*n '_im_anu*n
+'_aya=tu*n '_amana mas'ala=tu*n sa'ala ra'su*n qur'_anu*n ta'_amara
+_di'bu*n as'ila=tu*n q_ari'i-hi su'lu*n mas'_ulu*n
+tak_afu'u-hu su'ila q_ari'i-hi _di'_abu*n ra'_isu*n
+bu'isa ru'_ufu*n ra'_ufu*n su'_alu*n mu'arri_hu*n
+abn_a'a-hu abn_a'u-hu abn_a'i-hi ^say'a*n _ha*t_i'a=tu*n
+*daw'u-hu *d_u'u-hu *daw'a-hu *daw'i-hi mur_u'a=tu*n
+'abn_a'i-hi bar_i'u-hu s_u'ila f_ilu*n f_annu*n f_unnu*n
+s_a'ala fu'_adu*n ^surak_a'u-hu ri'_asa=tu*n tahni'a=tu*n
+daf_a'a:tu*n *taff_a'a=tu*n ta'r_i_hu*n fa'ru*n
+^say'u*n ^say'i*n ^say'a*n  
+*daw'u*n *daw'i*n *daw'a*n
+juz'u*n  juz'i*n  juz'a*n
+mabda'u*n mabda'i*n mabda'a*n
+naba'a q_ari'u*n tak_afu'u*n tak_afu'i*n tak_afu'a*n
+abn_a'u abn_a'i abn_a'a jar_i'u*n maqr_u'u*n *daw'u*n ^say'u*n juz'u*n
+`ulam_a'u al-`ulam_a'i al-`ulam_a'a
+`Amru*n*w wa-fa`al_u*a
+"""
 ##
 ###print(arabicToBetaCode(testStringArabic))
-##print(betacodeToArabic(testBetaCode))
-##print(betacodeToTranslit(testBetaCode))
+print(betacodeToArabic(testBetaCode))
+print(betacodeToTranslit(testBetaCode))
+testtext = "_amḥān iimm_u?n ?bubur?os"
+testtext = betacodeToArabic(testtext, paleo=True)
+print(testtext)
+#testtext = "امن آمں ٮُبُرْس"
+testtext = arabicToBetaCode(testtext, paleo=True)
+print(testtext)
+testtext = betacodeToArabic(testtext, paleo=True)
+print(testtext)
