@@ -290,6 +290,7 @@ arabicBetaCode = {
     " ف " :  "f",   # fā’
     " ق " :  "q",   # qāf
     " ك " :  "k",   # kāf
+    " ک " :  "k",   # kāf / Persian
     " گ " :  "g",   # gāf / Persian
     " ل " :  "l",   # lām
     " م " :  "m",   # mīm
@@ -297,6 +298,7 @@ arabicBetaCode = {
     " ه " :  "h",   # hāʾ
     " و " :  "w",   # wāw
     " ي " :  "y",   # yāʾ
+    " ی " :  "y",   # yāʾ / Persian
 # Non-alphabetic letters
     " ء " :  "'",   # hamza
     " ئ " :  "'i",  # hamza
