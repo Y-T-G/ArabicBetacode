@@ -128,9 +128,9 @@ translitLOC = {
     'a' : 'a',  # fatḥaŧ
     'u' : 'u',  # ḍammaŧ
     'i' : 'i',  # kasraŧ
-    'aȵ' : 'an',  # tanwīn fatḥ
-    'uȵ' : '',  # tanwīn ḍamm
-    'iȵ' : '',  # tanwīn kasr
+    'ảȵ' : 'an',  # tanwīn fatḥ
+    'ủȵ' : '',  # tanwīn ḍamm
+    'ỉȵ' : '',  # tanwīn kasr
     'ů' : '',  # silent w, like in `Amru.n.w
     'å' : '',  # silent alif, like in fa`al_u.a
     'ả' : '',  # final fatḥaŧ
@@ -185,14 +185,14 @@ translitSearch = {
     'a' : 'a',  # fatḥaŧ
     'u' : 'u',  # ḍammaŧ
     'i' : 'i',  # kasraŧ
-    'aȵ' : 'an',  # tanwīn fatḥ
-    'uȵ' : '',  # tanwīn ḍamm
-    'iȵ' : '',  # tanwīn kasr
+    'ảȵ' : 'an',  # tanwīn fatḥ
+    'ủȵ' : '',  # tanwīn ḍamm
+    'ỉȵ' : '',  # tanwīn kasr
     'ů' : '',   # silent w, like in `Amru.n.w
     'å' : '',   # silent alif, like in fa`al_u.a
     'ả' : '',   # final fatḥaŧ
-    'ỉ' : '',   # final ḍammaŧ
-    'ủ' : '',   # final kasraŧ
+    'ỉ' : '',   # final kasraŧ
+    'ủ' : '',   # final ḍammaŧ
     '°' : '',   # explicit sukūn
     }
 
@@ -242,14 +242,14 @@ translitArabic = {
     'a'  : ' َ ',  # fatḥaŧ
     'u'  : ' ُ ',  # ḍammaŧ
     'i'  : ' ِ ',  # kasraŧ
-    'aȵ' : ' ً ',  # tanwīn fatḥ
-    'uȵ' : ' ٌ ',  # tanwīn ḍamm
-    'iȵ' : ' ٍ ',  # tanwīn kasr
+    'ảȵ' : ' ً ',  # tanwīn fatḥ
+    'ủȵ' : ' ٌ ',  # tanwīn ḍamm
+    'ỉȵ' : ' ٍ ',  # tanwīn kasr
     'ů' : ' و ',  # silent w, like in `Amru.n.w
     'å' : ' ا ',  # silent alif, like in fa`al_u.a
     'ả' : ' َ ',  # final fatḥaŧ
-    'ỉ' : ' ِ ',  # final ḍammaŧ
-    'ủ' : ' ُ ',  # final kasraŧ
+    'ỉ' : ' ِ ',  # final kasraŧ
+    'ủ' : ' ُ ',  # final ḍammaŧ
 # Paleo: explicit sukūn
     '°' : ' ْ ',  # explicit sukūn
 # Paleo: Dotless letters
@@ -309,9 +309,9 @@ arabicBetaCode = {
     " َ " :  "a",   # fatḥaŧ
     " ُ " :  "u",   # ḍammaŧ
     " ِ " :  "i",   # kasraŧ
-    " ً " :  "a*n", # tanwīn fatḥ
-    " ٌ " :  "u*n", # tanwīn ḍamm
-    " ٍ " :  "i*n", # tanwīn kasr
+    " ً " :  "?a*n", # tanwīn fatḥ
+    " ٌ " :  "?u*n", # tanwīn ḍamm
+    " ٍ " :  "?i*n", # tanwīn kasr
 # Paleo: Dotless letters
     " ٮ" :  "?b",   # dotless b/t/th and non-final nūn/yāʾ
     " ٯ" :  "?q",   # dotless qāf
