@@ -11,6 +11,70 @@ import betaCodeTables
 #   - tagging Arabic words
 #   - tagging Arabic text
 
+# tag markers for OpenITI mARkdown:
+tag_markers = ["#", "$", "@", "|"]
+
+# mARkdown functions:
+
+def extract_tags(text):
+    """replace the mARkdown tags in the text by simplified tags,
+    consisting of the first tag symbol and a count number.
+    Keep these tags in a dictionary, so that they can be put back
+    into the text after the text has been transposed"""
+    tag_dic = dict()
+    tag_count = 0
+    current_tag = ""
+    new_text = ""
+    for c in text:
+        if current_tag:
+            if c != " ":
+                #print(current_tag)
+                current_tag += c
+            else:
+                repl_tag = current_tag[0]+str(tag_count)
+                tag_dic[repl_tag] = current_tag
+                new_text += repl_tag + c
+                tag_count += 1
+                current_tag = ""
+        else:
+            if c in tag_markers:
+                current_tag = c
+            else:
+                new_text += c
+    if current_tag:
+        repl_tag = current_tag[0]+str(tag_count)
+        tag_dic[repl_tag] = current_tag
+        new_text += repl_tag
+        
+    return new_text, tag_dic
+
+def put_back_tags(text, tag_dic):
+    """Replace the simplified tags (by which we replaced the
+    mARkdown tags previous to the transposing of the text)
+    by the original mARkdown tags"""
+    new_text = ""
+    #is_tag = False
+    current_tag = ""
+    for c in text:
+        #if is_tag:
+        if current_tag:
+            if c != " ":
+                current_tag += c
+            else:
+                new_text += tag_dic[current_tag] + c
+                current_tag = ""
+                #is_tag = False
+        else:
+            if c in tag_markers:
+                #is_tag = True
+                current_tag = c
+            else:
+                new_text += c
+    return new_text
+
+
+# Other helper functions:
+
 def deNoise(text):
     noise = re.compile(""" ّ    | # Tashdid
                              َ    | # Fatha
@@ -26,7 +90,7 @@ def deNoise(text):
     text = re.sub(noise, '', text)
     return(text)
 
-# define replacement with dictionaries
+
 def dictReplace(text, dic):
     tup_list = []
     for k, v in dic.items():
@@ -43,36 +107,58 @@ def dictReplace(text, dic):
         text = text.replace(k.upper(), vUpper)
     return(text)
 
+
 # conversion functions
-def betacodeToTranslit(text):
+
+def betacodeToTranslit(text, mARkdown=False):
     #print("betacodeToTranslit()")
+    if mARkdown:
+        text, tag_dic = extract_tags(text)
+        
     text = dictReplace(text, betaCodeTables.betacodeTranslit)
     text = re.sub("\+|_", "", text)
     
+    if mARkdown:
+        text = put_back_tags(text, tag_dic)    
     return(text)
 
-def betacodeToSearch(text):
+def betacodeToSearch(text, mARkdown=False):
     #print("betacodeToSearch()")
+    if mARkdown:
+        text, tag_dic = extract_tags(text)
+        
     text = dictReplace(text, betaCodeTables.betacodeTranslit)
     # fixing tāʾ marbūṭaŧs
     text = re.sub(r"ŧ\+", r"t", text)
     text = re.sub(r"ŧ", r"", text)
     text = dictReplace(text, betaCodeTables.translitSearch)
     text = re.sub("\w_", "", text)
+
+    if mARkdown:
+        text = put_back_tags(text, tag_dic)
     return(text)
 
-def betacodeToLOC(text):
+def betacodeToLOC(text, mARkdown=False):
     #print("betacodeToLOC()")
+    if mARkdown:
+        text, tag_dic = extract_tags(text)
+        
     text = dictReplace(text, betaCodeTables.betacodeTranslit)
     # fixing tāʾ marbūṭaŧs
     text = re.sub(r"ŧ\+", r"t", text)
     text = re.sub(r"ŧ", r"", text)
     text = dictReplace(text, betaCodeTables.translitLOC)
     text = re.sub(r"\w_", r"", text)
+
+    if mARkdown:
+        text = put_back_tags(text, tag_dic)
     return(text)
 
-def arabicToBetaCode(text, paleo=False, persian=False):
+def arabicToBetaCode(text, paleo=False, persian=False, mARkdown=False):
     #print("arabicToBetaCode()")
+
+    if mARkdown:
+        text, tag_dic = extract_tags(text)
 
     # convert optative phrases    
     text = re.sub(r"صلى الله عليه وسلم", r".sl`m", text)
@@ -104,16 +190,22 @@ def arabicToBetaCode(text, paleo=False, persian=False):
     text = re.sub(r"iy", r"_i", text)
     text = re.sub(r"uw", r"_u", text)
     text = re.sub(r"lll", r"ll", text)
-    
+
+    if mARkdown:
+        text = put_back_tags(text, tag_dic)
+
     return(text)
 
 
-def betacodeToArabic(text, paleo=False, persian=False):
+def betacodeToArabic(text, paleo=False, persian=False, mARkdown=False):
     """transcribe betacode to Arabic.
     var paleo: if set to True:
         - sukuns and vowels are only inserted when they are explicitly encoded
         - dotless letters are added to the consonants
     """
+
+    if mARkdown:
+        text, tag_dic = extract_tags(text)
     
     cnsnnts = "btṯǧčḥḥḫdḏrzsšṣḍṭẓʿġfḳkglmnhwy"
     if paleo:
@@ -291,6 +383,10 @@ def betacodeToArabic(text, paleo=False, persian=False):
     text = dictReplace(text, betaCodeTables.translitArabic)
     text = re.sub("-|_", "", text)
     #text = re.sub("-", "ـ ـ", text)
+
+    if mARkdown:
+        text = put_back_tags(text, tag_dic)
+
     return(text)
 
 def betaCodeToArSimple(text, paleo=False, persian=False):
@@ -362,3 +458,16 @@ if __name__ == "__main__":
     persiantest = "الکافي في الياسين"
     pb = arabicToBetaCode(persiantest, paleo=True, persian=True)
     print(pb)
+    # test if betacodeToArabic and arabicToBetaCode convert perfectly:
+    mARkdown_test = """
+    'amr?u*n ### ||| 'uns?u*n $DEST$1-5 'ins?u*n '_im_an?u*n
+    """
+    ar=betacodeToArabic(mARkdown_test, mARkdown=True)
+    print(ar)
+    bc2 = arabicToBetaCode(ar, mARkdown=True)
+    print(bc2)
+    print(mARkdown_test)
+    print(mARkdown_test==bc2)
+    ar2 = betacodeToArabic(bc2, mARkdown=True)
+    print(ar2)
+    print(ar==ar2)

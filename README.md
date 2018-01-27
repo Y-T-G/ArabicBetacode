@@ -1,7 +1,14 @@
 ﻿# Arabic betaCode
 
 
-## Paleography updates and Persian support(2018-01-27)
+
+
+## Support for OpenITI mARkdown(2018-01-27)
+
+Texts with OpenITI mARkdown tags (https://maximromanov.github.io/mARkdown/) can now be converted without having effect on the tags. All conversion functions now have an optional `mARkdown` argument (default: `False`); if set to `True`, the tags will be temporarily replaced by placeholders and put back into the text after conversion.
+
+
+## Paleography updates and Persian support (2018-01-27)
 
 A paleography mode was added, in which sukūns, vowels and other diacritics are not automatically added in transcription and Arabic script, and users have the possibility to manually add sukūns. The `betacodeToArabic` and `arabicToBetaCode` functions now have an optional argument `paleo` that, if set to `True`, disables the automatic creation of sukūns and vowels apart from those that are explicitly transcribed. In `paleo` mode, use simple a or i at the beginning of a word to transcribe a bare alif without vowels, hamza, madda or waṣla. The default setting for `paleo` is `False`, so that the code is by default executed exactly as before.
 In addition, support for Persian was added. Persian letters are transcribed in normal mode. In addition, the `betacodeToArabic` and `betaCodeToArSimple` functions now have an optional argument `persian` (default: `False`); if set to `True`, the Persian variants of *kāf* and *yā'* will be used instead of the Arabic versions (which look slightly different, and have different Unicode code points) will be used in the output. More functionality may be added later.
