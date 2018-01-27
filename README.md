@@ -1,21 +1,28 @@
 ﻿# Arabic betaCode
 
 
-## Paleography updates (2018-01-23)
+## Paleography updates and Persian support(2018-01-27)
 
-A paleography mode was added, in which sukūns, vowels and other diacritics are not automatically added in transcription and Arabic script, and users have the possibility to manually add sukūns. The betacodeToArabic and arabicToBetaCode functions now have an optional argument paleo that, if set to True, disables the automatic creation of sukūns and vowels apart from those that are explicitly transcribed. In paleo mode, use simple a or i at the beginning of a word to transcribe a bare alif without vowels, hamza, madda or waṣla. The default setting for paleo is False, so that the code is by default executed exactly as before.
+A paleography mode was added, in which sukūns, vowels and other diacritics are not automatically added in transcription and Arabic script, and users have the possibility to manually add sukūns. The `betacodeToArabic` and `arabicToBetaCode` functions now have an optional argument `paleo` that, if set to `True`, disables the automatic creation of sukūns and vowels apart from those that are explicitly transcribed. In `paleo` mode, use simple a or i at the beginning of a word to transcribe a bare alif without vowels, hamza, madda or waṣla. The default setting for `paleo` is `False`, so that the code is by default executed exactly as before.
+In addition, support for Persian was added. Persian letters are transcribed in normal mode. In addition, the `betacodeToArabic` and `betaCodeToArSimple` functions now have an optional argument `persian` (default: `False`); if set to `True`, the Persian variants of *kāf* and *yā'* will be used instead of the Arabic versions (which look slightly different, and have different Unicode code points) will be used in the output. More functionality may be added later.
 
 The following new characters were also added: 
 
 | betacode | translit | Arabic letter |
 |----------|-----------------|---------------|
-| **?b** | ɓ | undotted *bāʾ/tāʾ/thāʾ* and non-final *yāʾ/nūn* |
-| **?n** | ɲ | undotted final *nūn* |
-| **?f** | ƒ | undotted *fāʾ* |
-| **?q** | ɋ | undotted *qāf* |
-| **?o** | ° | explicit *sukūn* |
+| **?b** | ɓ \* | undotted *bāʾ/tāʾ/thāʾ* and non-final *yāʾ/nūn* |
+| **?n** | ɲ \* | undotted final *nūn* |
+| **?f** | ƒ \* | undotted *fāʾ* |
+| **?q** | ɋ \* | undotted *qāf* |
+| **!o** | ° | explicit *sukūn* (paleo mode) |
+| **p** | p | Persian letter *pe* |
+| **^c** | č | Persian letter *che* |
+| **^z** | ž | Persian letter *zhe* |
+| **k** | k | Persian letter *kāf* \*\* |
+| **g** | g | Persian letter *gāf* |
 
-NB: no standard symbols appear to exist for transcribing undotted letters.
+\* no standard symbols appear to exist for transcribing undotted letters.
+\*\* Persian and Arabic *kāf* are transcribed in the same way; the `persian` argument in the `betacodeToArabic` function defines if the Persian or Arabic variant is used in the output.
 
 
 ## Some updates to the scheme (2015-03-09:10-21)
@@ -44,15 +51,18 @@ Done to avoid issues with Alpheios translation alignment, which automatically sp
 |----------|-----------------|---------------|
 | **\_a** | ā | *alif* |
 | **b** | b | *bāʾ* |
+| **p** | p | Persian letter *pe* |
 | **t** | t | *tāʾ* |
 | **\_t** | ṯ | *thāʾ* |
 | **^g, j** | ǧ | *jīm* |
+| **^c** | č | Persian letter *che* |
 | **\*h** | ḥ | *ḥāʾ* |
 | **\_h** | ḫ | *khāʾ* |
 | **d** | d | *dāl* |
 | **\_d** | ḏ | *dhāl* |
 | **r** | r | *rā’* |
 | **z** | z | *zayn* |
+| **^z** | ž | Persian letter *zhe* |
 | **s** | s | *sīn* |
 | **^s** | š | *shīn* |
 | **\*s** | ṣ | *ṣād* |
@@ -63,7 +73,8 @@ Done to avoid issues with Alpheios translation alignment, which automatically sp
 | **\*g** | ġ | *ghayn* |
 | **f** | f | *fāʾ* |
 | **\*k, q** | ḳ | *qāf* |
-| **k** | k | *kāf* |
+| **k** | k | *kāf* (Arabic and Persian) |
+| **g** | g | Persian letter *gāf* |
 | **l** | l | *lām* |
 | **m** | m | *mīm* |
 | **n** | n | *nūn* |
@@ -88,6 +99,7 @@ Done to avoid issues with Alpheios translation alignment, which automatically sp
 | **u** | u | *ḍammaŧ* |
 | **i** | i | *kasraŧ* |
 | **a** | a | *fatḥaŧ* |
+| **!o** | ° | explicit *sukūn* (paleo mode) |
 | **\*n** | ȵ | *n* of *tanwīn* |
 | **\*a** | å | *silent alif* |
 | **\*w** | ů | *silent wāw* |
@@ -105,6 +117,7 @@ preceded (if necessary) with a technical character that is similar to a diacriti
 * **\_** (underscore), if a letter can be transliterated with *macron*/*breve* below or above (*ā*, *ṯ*, *ḫ*, *ḏ*, *ū*, *ī*)
 * **\*** (asterisk), if a letter can be transliterated transliterated with *dot* below or above (*ḥ*, *ṣ*, *ḍ*, *ṭ*, *ẓ*, *ġ*, *ḳ*)
 * **^** (caret), if a letter can be transliterated with *caron* (*ǧ*, *š*)
+* **!** (exclamation mark), for diacritics that are explicitly in a manuscript (in paleo mode only)
 
 #### *Specifics*
 * attached prepositions/conjunctions and pronominal suffixes must be separated with “-” (mostly relevant for text alignment, treebanking,  and general readability):
@@ -113,8 +126,8 @@ preceded (if necessary) with a technical character that is similar to a diacriti
 	* ``` bi-Llah?i  ```, but not:
 	* ``` fa-_dahaba ```	
 * *tāʾ marbūṭaŧ*: add “+” after *tāʾ marbūṭaŧ*, if the first word of *iḏāfaŧ* (mostly relevant for transliteration):
-	* ``` `_amma:t+u Ba.gd_ada ```, but:
-	* ``` al-`_amma:tu f_i Ba.gd_ada ```
+	* ``` `_amma=t+u Ba.gd_ada ```, but:
+	* ``` al-`_amma=tu f_i Ba.gd_ada ```
 * transliterating *tanwīn*:
 	* ```*n```
 		* ```?u*n```
