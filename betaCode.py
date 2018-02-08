@@ -11,6 +11,70 @@ import betaCodeTables
 #   - tagging Arabic words
 #   - tagging Arabic text
 
+# tag markers for OpenITI mARkdown:
+tag_markers = ["#", "$", "@", "|"]
+
+# mARkdown functions:
+
+def extract_tags(text):
+    """replace the mARkdown tags in the text by simplified tags,
+    consisting of the first tag symbol and a count number.
+    Keep these tags in a dictionary, so that they can be put back
+    into the text after the text has been transposed"""
+    tag_dic = dict()
+    tag_count = 0
+    current_tag = ""
+    new_text = ""
+    for c in text:
+        if current_tag:
+            if c != " ":
+                #print(current_tag)
+                current_tag += c
+            else:
+                repl_tag = current_tag[0]+str(tag_count)
+                tag_dic[repl_tag] = current_tag
+                new_text += repl_tag + c
+                tag_count += 1
+                current_tag = ""
+        else:
+            if c in tag_markers:
+                current_tag = c
+            else:
+                new_text += c
+    if current_tag:
+        repl_tag = current_tag[0]+str(tag_count)
+        tag_dic[repl_tag] = current_tag
+        new_text += repl_tag
+        
+    return new_text, tag_dic
+
+def put_back_tags(text, tag_dic):
+    """Replace the simplified tags (by which we replaced the
+    mARkdown tags previous to the transposing of the text)
+    by the original mARkdown tags"""
+    new_text = ""
+    #is_tag = False
+    current_tag = ""
+    for c in text:
+        #if is_tag:
+        if current_tag:
+            if c != " ":
+                current_tag += c
+            else:
+                new_text += tag_dic[current_tag] + c
+                current_tag = ""
+                #is_tag = False
+        else:
+            if c in tag_markers:
+                #is_tag = True
+                current_tag = c
+            else:
+                new_text += c
+    return new_text
+
+
+# Other helper functions:
+
 def deNoise(text):
     noise = re.compile(""" ّ    | # Tashdid
                              َ    | # Fatha
@@ -26,11 +90,15 @@ def deNoise(text):
     text = re.sub(noise, '', text)
     return(text)
 
-# define replacement with dictionaries
+
 def dictReplace(text, dic):
+    tup_list = []
     for k, v in dic.items():
         k = k.strip()
         v = v.strip()
+        tup_list.append((k,v))
+    # replace the longest elements first:
+    for k,v in sorted(tup_list, key=lambda x: len(x[0]), reverse=True):
         text = text.replace(k, v)
         if len(v) > 1:
             vUpper = v[0].upper()+v[1:]
@@ -39,49 +107,74 @@ def dictReplace(text, dic):
         text = text.replace(k.upper(), vUpper)
     return(text)
 
+
 # conversion functions
-def betacodeToTranslit(text):
+
+def betacodeToTranslit(text, mARkdown=False):
     #print("betacodeToTranslit()")
+    if mARkdown:
+        text, tag_dic = extract_tags(text)
+        
     text = dictReplace(text, betaCodeTables.betacodeTranslit)
     text = re.sub("\+|_", "", text)
     
+    if mARkdown:
+        text = put_back_tags(text, tag_dic)    
     return(text)
 
-def betacodeToSearch(text):
+def betacodeToSearch(text, mARkdown=False):
     #print("betacodeToSearch()")
+    if mARkdown:
+        text, tag_dic = extract_tags(text)
+        
     text = dictReplace(text, betaCodeTables.betacodeTranslit)
     # fixing tāʾ marbūṭaŧs
     text = re.sub(r"ŧ\+", r"t", text)
     text = re.sub(r"ŧ", r"", text)
     text = dictReplace(text, betaCodeTables.translitSearch)
     text = re.sub("\w_", "", text)
+
+    if mARkdown:
+        text = put_back_tags(text, tag_dic)
     return(text)
 
-def betacodeToLOC(text):
+def betacodeToLOC(text, mARkdown=False):
     #print("betacodeToLOC()")
+    if mARkdown:
+        text, tag_dic = extract_tags(text)
+        
     text = dictReplace(text, betaCodeTables.betacodeTranslit)
     # fixing tāʾ marbūṭaŧs
     text = re.sub(r"ŧ\+", r"t", text)
     text = re.sub(r"ŧ", r"", text)
     text = dictReplace(text, betaCodeTables.translitLOC)
     text = re.sub(r"\w_", r"", text)
+
+    if mARkdown:
+        text = put_back_tags(text, tag_dic)
     return(text)
 
-def arabicToBetaCode(text, paleo=False):
+def arabicToBetaCode(text, paleo=False, persian=False, mARkdown=False):
     #print("arabicToBetaCode()")
+
+    if mARkdown:
+        text, tag_dic = extract_tags(text)
 
     # convert optative phrases    
     text = re.sub(r"صلى الله عليه وسلم", r".sl`m", text)
     text = re.sub(r"radiyallahuanhu", r"r.dh", text)
 
-    text = dictReplace(text, betaCodeTables.arabicBetaCode)
-    
-    # converting tashdids and removing Arabic residue
-    text = re.sub(r"(\w)%s" % " ّ ".strip(), r"\1\1", text)
+    # deal with sukun
     if not paleo:
         text = re.sub(" ْ ".strip(), r"", text)
     else: # keep explicit sukuns
         text = re.sub(" ْ ".strip(), r"?o", text)
+
+    # replace all letters
+    text = dictReplace(text, betaCodeTables.arabicBetaCode)
+    
+    # converting tashdids and removing Arabic residue
+    text = re.sub(r"(\w)%s" % " ّ ".strip(), r"\1\1", text)
     text = re.sub(r"،", r",", text)
 
     # fixing artifacts
@@ -90,21 +183,29 @@ def arabicToBetaCode(text, paleo=False):
     text = re.sub(r"aa", r"a", text)
     text = re.sub(r"ii", r"i", text)
     text = re.sub(r"uu", r"u", text)
+##    text = re.sub(r"([uia])\*n", r"?\1*n", text)
+    text = re.sub(r"'au", r"'u", text)
     text = re.sub(r"a_a", r"_a", text)
     text = re.sub(r"a/a", r"/a", text)
     text = re.sub(r"iy", r"_i", text)
     text = re.sub(r"uw", r"_u", text)
     text = re.sub(r"lll", r"ll", text)
-    
+
+    if mARkdown:
+        text = put_back_tags(text, tag_dic)
+
     return(text)
 
 
-def betacodeToArabic(text, paleo=False):
+def betacodeToArabic(text, paleo=False, persian=False, mARkdown=False):
     """transcribe betacode to Arabic.
     var paleo: if set to True:
         - sukuns and vowels are only inserted when they are explicitly encoded
         - dotless letters are added to the consonants
     """
+
+    if mARkdown:
+        text, tag_dic = extract_tags(text)
     
     cnsnnts = "btṯǧčḥḥḫdḏrzsšṣḍṭẓʿġfḳkglmnhwy"
     if paleo:
@@ -118,9 +219,9 @@ def betacodeToArabic(text, paleo=False):
 
     # fix irrelevant variables for Arabic script
     text = text.lower()
-    text = re.sub("ủ", "u", text)
-    text = re.sub("ỉ", "i", text)
-    text = re.sub("ả", "a", text)
+##    text = re.sub("ủ", "u", text)
+##    text = re.sub("ỉ", "i", text)
+##    text = re.sub("ả", "a", text)
     
     # complex combinations
     sun = "tṯdḏrzsšṣḍṭẓln"
@@ -165,35 +266,35 @@ def betacodeToArabic(text, paleo=False):
     # final HAMZAs
     text = re.sub(r'yʾaȵ', r"يْئًا", text)
     
-    text = re.sub(r'([%s])ʾuȵ' % cnsnnts, r"\1%s" % "ْءٌ", text)
-    text = re.sub(r'([%s])ʾiȵ' % cnsnnts, r"\1%s" % "ْءٍ", text)
-    text = re.sub(r'([%s])ʾaȵ' % cnsnnts, r"\1%s" % "ْءًا", text)
+    text = re.sub(r'([%s])ʾủȵ' % cnsnnts, r"\1%s" % "ْءٌ", text)
+    text = re.sub(r'([%s])ʾỉȵ' % cnsnnts, r"\1%s" % "ْءٍ", text)
+    text = re.sub(r'([%s])ʾảȵ' % cnsnnts, r"\1%s" % "ْءًا", text)
 
     # short, hamza, tanwin
-    text = re.sub(r'uʾuȵ', r"ُؤٌ", text)
-    text = re.sub(r'uʾiȵ', r"ُؤٍ", text)
-    text = re.sub(r'uʾaȵ', r"ُؤًا", text)
+    text = re.sub(r'uʾủȵ', r"ُؤٌ", text)
+    text = re.sub(r'uʾỉȵ', r"ُؤٍ", text)
+    text = re.sub(r'uʾảȵ', r"ُؤًا", text)
 
-    text = re.sub(r'iʾuȵ', r"ِئٌ", text)
-    text = re.sub(r'iʾiȵ', r"ِئٍ", text)
-    text = re.sub(r'iʾaȵ', r"ِئًا", text)
+    text = re.sub(r'iʾủȵ', r"ِئٌ", text)
+    text = re.sub(r'iʾỉȵ', r"ِئٍ", text)
+    text = re.sub(r'iʾảȵ', r"ِئًا", text)
 
-    text = re.sub(r'aʾuȵ', r"َأٌ", text)
-    text = re.sub(r'aʾiȵ', r"َأٍ", text)
-    text = re.sub(r'aʾaȵ', r"َأً", text)
+    text = re.sub(r'aʾủȵ', r"َأٌ", text)
+    text = re.sub(r'aʾỉȵ', r"َأٍ", text)
+    text = re.sub(r'aʾảȵ', r"َأً", text)
 
     # long, hamza, tanwin
-    text = re.sub(r'ūʾuȵ', r"وءٌ", text)
-    text = re.sub(r'ūʾiȵ', r"وءٍ", text)
-    text = re.sub(r'ūʾaȵ', r"وءً", text)
+    text = re.sub(r'ūʾủȵ', r"وءٌ", text)
+    text = re.sub(r'ūʾỉȵ', r"وءٍ", text)
+    text = re.sub(r'ūʾảȵ', r"وءً", text)
 
-    text = re.sub(r'īʾuȵ', r"يءٌ", text)
-    text = re.sub(r'īʾiȵ', r"يءٍ", text)
-    text = re.sub(r'īʾaȵ', r"يءً", text)
+    text = re.sub(r'īʾủȵ', r"يءٌ", text)
+    text = re.sub(r'īʾỉȵ', r"يءٍ", text)
+    text = re.sub(r'īʾảȵ', r"يءً", text)
 
-    text = re.sub(r'āʾuȵ', r"اءٌ", text)
-    text = re.sub(r'āʾiȵ', r"اءٍ", text)
-    text = re.sub(r'āʾaȵ', r"اءً", text)
+    text = re.sub(r'āʾủȵ', r"اءٌ", text)
+    text = re.sub(r'āʾỉȵ', r"اءٍ", text)
+    text = re.sub(r'āʾảȵ', r"اءً", text)
 
     # long, hamza, diptote
     text = re.sub(r'āʾu\b', r"اءُ", text)
@@ -274,13 +375,22 @@ def betacodeToArabic(text, paleo=False):
     text = re.sub('å' , "ا", text)
 
 
+    if persian:
+        betaCodeTables.translitArabic["k"] = "ک"
+        betaCodeTables.translitArabic["y"] = "ی"
+        betaCodeTables.translitArabic["ī"] = "ی"
+    
     text = dictReplace(text, betaCodeTables.translitArabic)
     text = re.sub("-|_", "", text)
     #text = re.sub("-", "ـ ـ", text)
+
+    if mARkdown:
+        text = put_back_tags(text, tag_dic)
+
     return(text)
 
-def betaCodeToArSimple(text):
-    text = betacodeToArabic(text)
+def betaCodeToArSimple(text, paleo=False, persian=False):
+    text = betacodeToArabic(text, paleo, persian)
     text = deNoise(text)
     return(text)
     
@@ -288,52 +398,76 @@ def betaCodeToArSimple(text):
 ###########################################################
 # BELOW : TESTING ZONE ####################################
 ###########################################################
-##
-##testString = """
-##.kul huwa all~ahu_ a.hadu.n all~ahu_ al-.samadu_ lam yalid wa-lam y_ulad wa-lam yakun lahu kufu'a.n a.hadu.n
-##
-##wa-.k_amat `_amma:t+u_ Ba.gd_ada_ li-yusallima al-_hal_ifa:ta_ al-Man.s_ura_ `al/a ruj_u`i-hi min al-K_ufa:ti_
-##
-##al-.hamdu li-Ll~ahi rabbi al-`_alam_ina_
-##"""
-##
-##
-####print("betacode")
-####print(testString)
-##print(betacodeToTranslit(testString))
-##print(betacodeToSearch(testString))
-##print(betacodeToLOC(testString))
-##print(betacodeToArabic(testString))
-##
-testBetaCode = """
-'amru*n 'unsu*n 'insu*n '_im_anu*n
-'_aya=tu*n '_amana mas'ala=tu*n sa'ala ra'su*n qur'_anu*n ta'_amara
-_di'bu*n as'ila=tu*n q_ari'i-hi su'lu*n mas'_ulu*n
-tak_afu'u-hu su'ila q_ari'i-hi _di'_abu*n ra'_isu*n
-bu'isa ru'_ufu*n ra'_ufu*n su'_alu*n mu'arri_hu*n
-abn_a'a-hu abn_a'u-hu abn_a'i-hi ^say'a*n _ha*t_i'a=tu*n
-*daw'u-hu *d_u'u-hu *daw'a-hu *daw'i-hi mur_u'a=tu*n
-'abn_a'i-hi bar_i'u-hu s_u'ila f_ilu*n f_annu*n f_unnu*n
-s_a'ala fu'_adu*n ^surak_a'u-hu ri'_asa=tu*n tahni'a=tu*n
-daf_a'a:tu*n *taff_a'a=tu*n ta'r_i_hu*n fa'ru*n
-^say'u*n ^say'i*n ^say'a*n  
-*daw'u*n *daw'i*n *daw'a*n
-juz'u*n  juz'i*n  juz'a*n
-mabda'u*n mabda'i*n mabda'a*n
-naba'a q_ari'u*n tak_afu'u*n tak_afu'i*n tak_afu'a*n
-abn_a'u abn_a'i abn_a'a jar_i'u*n maqr_u'u*n *daw'u*n ^say'u*n juz'u*n
-`ulam_a'u al-`ulam_a'i al-`ulam_a'a
-`Amru*n*w wa-fa`al_u*a
-"""
-##
-###print(arabicToBetaCode(testStringArabic))
-print(betacodeToArabic(testBetaCode))
-print(betacodeToTranslit(testBetaCode))
-testtext = "_amḥān iimm_u?n ?bubur?os"
-testtext = betacodeToArabic(testtext, paleo=True)
-print(testtext)
-#testtext = "امن آمں ٮُبُرْس"
-testtext = arabicToBetaCode(testtext, paleo=True)
-print(testtext)
-testtext = betacodeToArabic(testtext, paleo=True)
-print(testtext)
+
+if __name__ == "__main__":
+    ##
+    ##testString = """
+    ##.kul huwa all~ahu_ a.hadu.n all~ahu_ al-.samadu_ lam yalid wa-lam y_ulad wa-lam yakun lahu kufu'a.n a.hadu.n
+    ##
+    ##wa-.k_amat `_amma:t+u_ Ba.gd_ada_ li-yusallima al-_hal_ifa:ta_ al-Man.s_ura_ `al/a ruj_u`i-hi min al-K_ufa:ti_
+    ##
+    ##al-.hamdu li-Ll~ahi rabbi al-`_alam_ina_
+    ##"""
+    ##
+    ##
+    ####print("betacode")
+    ####print(testString)
+    ##print(betacodeToTranslit(testString))
+    ##print(betacodeToSearch(testString))
+    ##print(betacodeToLOC(testString))
+    ##print(betacodeToArabic(testString))
+    ##
+    testBetaCode = """
+    'amr?u*n 'uns?u*n 'ins?u*n '_im_an?u*n
+    '_aya=t?u*n '_amana mas'ala=t?u*n sa'ala ra's?u*n qur'_an?u*n ta'_amara
+    _di'b?u*n as'ila=t?u*n q_ari'i-hi su'l?u*n mas'_ul?u*n
+    tak_afu'u-hu su'ila q_ari'i-hi _di'_ab?u*n ra'_is?u*n
+    bu'isa ru'_uf?u*n ra'_uf?u*n su'_al?u*n mu'arri_h?u*n
+    abn_a'a-hu abn_a'u-hu abn_a'i-hi ^say'a*n _ha*t_i'a=t?u*n
+    *daw'u-hu *d_u'u-hu *daw'a-hu *daw'i-hi mur_u'a=t?u*n
+    'abn_a'i-hi bar_i'u-hu s_u'ila f_il?u*n f_ann?u*n f_unn?u*n
+    s_a'ala fu'_ad?u*n ^surak_a'u-hu ri'_asa=t?u*n tahni'a=t?u*n
+    daf_a'a=t?u*n *taff_a'a=t?u*n ta'r_i_h?u*n fa'r?u*n
+    ^say'?u*n ^say'?i*n ^say'?a*n  
+    *daw'?u*n *daw'?i*n *daw'?a*n
+    juz'?u*n  juz'?i*n  juz'?a*n
+    mabda'?u*n mabda'?i*n mabda'?a*n
+    naba'a q_ari'?u*n tak_afu'?u*n tak_afu'?i*n tak_afu'?a*n
+    abn_a'u abn_a'i abn_a'a jar_i'?u*n maqr_u'?u*n *daw'?u*n ^say'?u*n juz'?u*n
+    `ulam_a'u al-`ulam_a'i al-`ulam_a'a
+    `Amr?u*n*w wa-fa`al_u*a
+    """
+    ##
+    ###print(arabicToBetaCode(testStringArabic))
+    ar = betacodeToArabic(testBetaCode)
+    print(ar)
+    tl = betacodeToTranslit(testBetaCode)
+    print(tl)
+    loc = betacodeToLOC(testBetaCode)
+    print(loc)
+    bc = arabicToBetaCode(ar)
+    print(bc)
+    testtext = "_amḥān iimm_u?n ?bubur?os"
+    testtext = betacodeToArabic(testtext, paleo=True)
+    print(testtext)
+    #testtext = "امن آمں ٮُبُرْس"
+    testtext = arabicToBetaCode(testtext, paleo=True)
+    print(testtext)
+    testtext = betacodeToArabic(testtext, paleo=True)
+    print(testtext)
+    persiantest = "الکافي في الياسين"
+    pb = arabicToBetaCode(persiantest, paleo=True, persian=True)
+    print(pb)
+    # test if betacodeToArabic and arabicToBetaCode convert perfectly:
+    mARkdown_test = """
+    'amr?u*n ### ||| 'uns?u*n $DEST$1-5 'ins?u*n '_im_an?u*n
+    """
+    ar=betacodeToArabic(mARkdown_test, mARkdown=True)
+    print(ar)
+    bc2 = arabicToBetaCode(ar, mARkdown=True)
+    print(bc2)
+    print(mARkdown_test)
+    print(mARkdown_test==bc2)
+    ar2 = betacodeToArabic(bc2, mARkdown=True)
+    print(ar2)
+    print(ar==ar2)

@@ -13,6 +13,7 @@ betacodeTranslit = {
 # Alphabet letters
     '_a' : 'ā', # alif
     'b'  : 'b', # bā’
+    'p'  : 'p', # pe / Persian
     't'  : 't', # tā’
     '_t' : 'ṯ', # thā’
     '^g' : 'ǧ', # jīm
@@ -25,6 +26,7 @@ betacodeTranslit = {
     '_d' : 'ḏ', # dhāl
     'r'  : 'r', # rā’
     'z'  : 'z', # zayn
+    '^z' : 'ž', # že / Persian
     's'  : 's', # sīn
     '^s' : 'š', # shīn
     '*s' : 'ṣ', # ṣād
@@ -42,7 +44,7 @@ betacodeTranslit = {
     '*k' : 'ḳ', # qāf
     #'.k' : 'ḳ', # qāf
     'q'  : 'ḳ', # qāf
-    'k'  : 'k', # kāf
+    'k'  : 'k', # kāf (Arabic and Persian)
     'g'  : 'g', # gāf / Persian
     'l'  : 'l', # lām
     'm'  : 'm', # mīm
@@ -50,12 +52,12 @@ betacodeTranslit = {
     'h'  : 'h', # hā’
     'w'  : 'w', # wāw
     '_u' : 'ū', # wāw
-    'y'  : 'y', # yā’
-    '_i' : 'ī', # yā’
+    'y'  : 'y', # yā’ (Arabic and Persian)
+    '_i' : 'ī', # yā’ (Arabic and Persian)
 # Non-alphabetic letters
     '\'' : 'ʾ', # hamzaŧ
     '/a' : 'á', # alif maqṣūraŧ
-    #':t' : 'ŧ', # tā’ marbūṭaŧ, add +, it in idafa (`_amma:t+ ba*gd_ad)
+    #':t' : 'ŧ', # tā’ marbūṭaŧ, add +, if in idafa (`_amma:t+ ba*gd_ad)
     '=t' : 'ŧ', # tā’ marbūṭaŧ, this is preferable for Alpheios
 # Vowels
     '~a' : 'ã', # dagger alif
@@ -70,7 +72,9 @@ betacodeTranslit = {
     #'_n' : 'ȵ',  # n of tanwīn
     '*n' : 'ȵ',   # n of tanwīn
     '*w' : 'ů',  # silent w, like in `Amru.n.w
-    '*a' : 'å',  # silent alif, like in fa`al_u.a    
+    '*a' : 'å',  # silent alif, like in fa`al_u.a
+# Paleo: explicit sukūn
+    '!o' : '°',  # explicit sukūn
 # Paleo: Dotless letters
     "?b" :  "ɓ",   # dotless b/t/th and non-final nūn/yāʾ
     "?q" :  "ɋ",   # dotless qāf
@@ -83,6 +87,7 @@ translitLOC = {
 # Alphabet letters
     'ā' : 'ā',  # alif
     'b' : 'b',  # bā’
+    'p' : 'p',  # pe / Persian
     't' : 't',  # tā’
     'ṯ' : 'th', # thā’
     'ǧ' : 'j',  # jīm
@@ -93,6 +98,7 @@ translitLOC = {
     'ḏ' : 'dh', # dhāl
     'r' : 'r',  # rā’
     'z' : 'z',  # zayn
+    'ž' : 'zh', # zhe / Persian
     's' : 's',  # sīn
     'š' : 'sh', # shīn
     'ṣ' : 'ṣ',  # ṣād
@@ -114,7 +120,7 @@ translitLOC = {
     'y' : 'y',  # yā’
     'ī' : 'ī',  # yā’
 # Non-alphabetic letters
-    'ʾ' : 'ʾ',   # hamzaŧ
+    'ʾ' : 'ʾ',  # hamzaŧ
     'á' : 'ā',  # alif maqṣūraŧ
     'ŧ' : 'h',  # tā’ marbūṭaŧ
 # Vowels
@@ -122,14 +128,15 @@ translitLOC = {
     'a' : 'a',  # fatḥaŧ
     'u' : 'u',  # ḍammaŧ
     'i' : 'i',  # kasraŧ
-    'aȵ' : 'an',  # tanwīn fatḥ
-    'uȵ' : '',  # tanwīn ḍamm
-    'iȵ' : '',  # tanwīn kasr
+    'ảȵ' : 'an',  # tanwīn fatḥ
+    'ủȵ' : '',  # tanwīn ḍamm
+    'ỉȵ' : '',  # tanwīn kasr
     'ů' : '',  # silent w, like in `Amru.n.w
     'å' : '',  # silent alif, like in fa`al_u.a
     'ả' : '',  # final fatḥaŧ
     'ỉ' : '',  # final ḍammaŧ
-    'ủ' : '',  # final kasraŧ    
+    'ủ' : '',  # final kasraŧ
+    '°' : '',  # explicit sukūn
     }
 
 # necessary for rendering searcheable lines
@@ -137,6 +144,7 @@ translitSearch = {
 # Alphabet letters
     'ā' : 'a',  # alif
     'b' : 'b',  # bā’
+    'p' : 'p',  # pe / Persian
     't' : 't',  # tā’
     'ṯ' : 'th', # thā’
     'ǧ' : 'j',  # jīm
@@ -147,6 +155,7 @@ translitSearch = {
     'ḏ' : 'dh', # dhāl
     'r' : 'r',  # rā’
     'z' : 'z',  # zayn
+    'ž' : 'zh', # zhe / Persian
     's' : 's',  # sīn
     'š' : 'sh', # shīn
     'ṣ' : 's',  # ṣād
@@ -176,40 +185,44 @@ translitSearch = {
     'a' : 'a',  # fatḥaŧ
     'u' : 'u',  # ḍammaŧ
     'i' : 'i',  # kasraŧ
-    'aȵ' : 'an',  # tanwīn fatḥ
-    'uȵ' : '',  # tanwīn ḍamm
-    'iȵ' : '',  # tanwīn kasr
-    'ů' : '',  # silent w, like in `Amru.n.w
-    'å' : '',  # silent alif, like in fa`al_u.a
-    'ả' : '',  # final fatḥaŧ
-    'ỉ' : '',  # final ḍammaŧ
-    'ủ' : '',  # final kasraŧ 
+    'ảȵ' : 'an',  # tanwīn fatḥ
+    'ủȵ' : '',  # tanwīn ḍamm
+    'ỉȵ' : '',  # tanwīn kasr
+    'ů' : '',   # silent w, like in `Amru.n.w
+    'å' : '',   # silent alif, like in fa`al_u.a
+    'ả' : '',   # final fatḥaŧ
+    'ỉ' : '',   # final kasraŧ
+    'ủ' : '',   # final ḍammaŧ
+    '°' : '',   # explicit sukūn
     }
 
 translitArabic = {
 # Alphabet letters
     'ā' : ' ا ',  # alif
     'b' : ' ب ',  # bāʾ
+    'p' : ' پ ',  # pe / Persian
     't' : ' ت ',  # tāʾ
-    'ṯ' : ' ث ', # thāʾ
+    'ṯ' : ' ث ',  # thāʾ
     'ǧ' : ' ج ',  # jīm
-    'č' : ' چ ', # chīm / Persian
+    'č' : ' چ ',  # chīm / Persian
     'ḥ' : ' ح ',  # ḥāʾ
-    'ḫ' : ' خ ', # khāʾ
+    'ḫ' : ' خ ',  # khāʾ
     'd' : ' د ',  # dāl
-    'ḏ' : ' ذ ', # dhāl
+    'ḏ' : ' ذ ',  # dhāl
     'r' : ' ر ',  # rāʾ
     'z' : ' ز ',  # zayn
+    'ž' : ' ژ ',  # zhe / Persian
     's' : ' س ',  # sīn
-    'š' : ' ش ', # shīn
+    'š' : ' ش ',  # shīn
     'ṣ' : ' ص ',  # ṣād
     'ḍ' : ' ض ',  # ḍād
     'ṭ' : ' ط ',  # ṭāʾ
     'ẓ' : ' ظ ',  # ẓāʾ
     'ʿ' : ' ع ',  # ʿayn
-    'ġ' : ' غ ', # ghayn
+    'ġ' : ' غ ',  # ghayn
     'f' : ' ف ',  # fā’
     'ḳ' : ' ق ',  # qāf
+    'q' : ' ق ',  # qāf
     'k' : ' ك ',  # kāf
     'g' : ' گ ',  # gāf / Persian
     'l' : ' ل ',  # lām
@@ -229,14 +242,14 @@ translitArabic = {
     'a'  : ' َ ',  # fatḥaŧ
     'u'  : ' ُ ',  # ḍammaŧ
     'i'  : ' ِ ',  # kasraŧ
-    'aȵ' : ' ً ',  # tanwīn fatḥ
-    'uȵ' : ' ٌ ',  # tanwīn ḍamm
-    'iȵ' : ' ٍ ',  # tanwīn kasr
+    'ảȵ' : ' ً ',  # tanwīn fatḥ
+    'ủȵ' : ' ٌ ',  # tanwīn ḍamm
+    'ỉȵ' : ' ٍ ',  # tanwīn kasr
     'ů' : ' و ',  # silent w, like in `Amru.n.w
     'å' : ' ا ',  # silent alif, like in fa`al_u.a
     'ả' : ' َ ',  # final fatḥaŧ
-    'ỉ' : ' ِ ',  # final ḍammaŧ
-    'ủ' : ' ُ ',  # final kasraŧ
+    'ỉ' : ' ِ ',  # final kasraŧ
+    'ủ' : ' ُ ',  # final ḍammaŧ
 # Paleo: explicit sukūn
     '°' : ' ْ ',  # explicit sukūn
 # Paleo: Dotless letters
@@ -249,19 +262,23 @@ translitArabic = {
 arabicBetaCode = {
 # Alphabet letters
     " ا " :  "_a",   # alif
-    " أ " :  "'a",   # alif
-    " إ " :  "'i",   # alif
-    " آ " :  "'_a",  # alif
+    " أ " :  "'a",   # alif with hamza on top
+    " إ " :  "'i",   # alif alif with hamza beneath
+    " آ " :  "'_a",  # alif + madda
+    #" ٱ " : "???",   # alif + waṣla
     " ب " :  "b",   # bāʾ
+    " پ " :  "p",   # pe / Persian
     " ت " :  "t",   # tāʾ
     " ث " :  "_t",  # thāʾ
     " ج " :  "^g",  # jīm
+    " چ " :  "^c",  # chīm / Persian
     " ح " :  "*h",  # ḥāʾ
     " خ " :  "_h",  # khāʾ
     " د " :  "d",   # dāl
     " ذ " :  "_d",  # dhāl
     " ر " :  "r",   # rāʾ
     " ز " :  "z",   # zayn
+    " ژ " :  "^z",  # zhe / Persian
     " س " :  "s",   # sīn
     " ش " :  "^s",  # shīn
     " ص " :  "*s",  # ṣād
@@ -273,15 +290,18 @@ arabicBetaCode = {
     " ف " :  "f",   # fā’
     " ق " :  "q",   # qāf
     " ك " :  "k",   # kāf
+    " ک " :  "k",   # kāf / Persian
+    " گ " :  "g",   # gāf / Persian
     " ل " :  "l",   # lām
     " م " :  "m",   # mīm
     " ن " :  "n",   # nūn
     " ه " :  "h",   # hāʾ
     " و " :  "w",   # wāw
     " ي " :  "y",   # yāʾ
+    " ی " :  "y",   # yāʾ / Persian
 # Non-alphabetic letters
     " ء " :  "'",   # hamza
-    " ئ " :  "'i",   # hamza
+    " ئ " :  "'i",  # hamza
     " ؤ " :  "'u",  # hamza
     " ى " :  "/a",  # alif maqṣūraŧ
     " ة " :  "=t",  # tāʾ marbūṭaŧ
@@ -291,12 +311,14 @@ arabicBetaCode = {
     " َ " :  "a",   # fatḥaŧ
     " ُ " :  "u",   # ḍammaŧ
     " ِ " :  "i",   # kasraŧ
-    " ً " :  "a*n", # tanwīn fatḥ
-    " ٌ " :  "u*n", # tanwīn ḍamm
-    " ٍ " :  "i*n", # tanwīn kasr
+    " ً " :  "?a*n", # tanwīn fatḥ
+    " ٌ " :  "?u*n", # tanwīn ḍamm
+    " ٍ " :  "?i*n", # tanwīn kasr
 # Paleo: Dotless letters
     " ٮ" :  "?b",   # dotless b/t/th and non-final nūn/yāʾ
     " ٯ" :  "?q",   # dotless qāf
     " ں" :  "?n",   # dotless final nūn
     " ڡ" :  "?f",   # dotless fāʾ
+# Paleo: explicit sukūn
+    " ْ " :  "!o",   # explicit sukūn
     }
