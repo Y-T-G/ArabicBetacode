@@ -274,3 +274,7 @@ al-Dhahabī, Shams al-Dīn Abū ʿAbd Allāh Muḥammad b. ʿUthmān b. Qāymā�
 Dimashq, Dimashq al-Sham or simply al-Sham , (Lat. Damascus, Fr. Damas) is the largest city of Syria. It is situated ... very much at the same latitude as Baghdad and Fas, at an altitude of nearly 700 metres, on the edge of the desert at the foot of Jabal Qasiyun.
 
 al-Dhahabi, Shams al-Din Abu Abd Allah Muhammad b. Uthman b. Qaymaz b. Abd Allah al-Turkumani al-Fariqi al-Dimashqi al-Shafii, an Arab historian and theologian, was born at Damascus or at Mayyafariqin on 1 or 3 Rabi II (according to al-Kutubi, in Rabi I) 673/5 or 7 October 1274, and died at Damascus, according to al-Subki and al-Suyuti, in the night of Sunday-Monday on 3 Dhu al-Qada 748/4 February 1348, or, according to Ahmad b. Iyas, in 753/1352-3. He was buried at the Bab al-Saghir.
+
+# License
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License</a>.
