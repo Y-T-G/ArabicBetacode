@@ -3,43 +3,65 @@ import betaCode, betaCodeTables
 import argparse
 import sys
 
-def translitArabic():
-    textToConvert = sys.stdin.read()
+def getDelimited(text):
+  return re.findall(r"(?<!\\)%(.*?)(?<!\\)%", text)
 
-    translitBetaCode = betaCode.arabicToBetaCode(textToConvert)
-    newText = translitBetaCode
-    sys.stdout.buffer.write(newText.encode('utf8'))
+def translitArabic():
+    text = sys.stdin.read()
+
+    if(getattr(args, 'delimited') != None):
+      textToConvert = getDelimited(text)
+      for match in textToConvert:
+        translitBetaCode = betaCode.arabicToBetaCode(match)
+        text = text.replace('%' + match + '%', translitBetaCode)
+
+    else:
+      text = betaCode.arabicToBetaCode(text)
+
+    sys.stdout.buffer.write(text.encode('utf8'))
 
 
 def translitOTO():
-    textToConvert = sys.stdin.read()
+    text = sys.stdin.read()
 
-    translitBetaCode = betaCode.arabicToBetaCode(textToConvert)
+    if(getattr(args, 'delimited') != None):
+      textToConvert = getDelimited(text)
+      for match in textToConvert:
+        translitOTO = betaCode.betacodeToTranslit(match)
+        text = text.replace('%' + match + '%', translitOTO)
 
-    translitOTO = betaCode.betacodeToTranslit(translitBetaCode)
+    else:
+      text = betaCode.betacodeToTranslit(text)
 
-    newText = translitOTO
-    sys.stdout.buffer.write(newText.encode('utf8'))
+    sys.stdout.buffer.write(text.encode('utf8'))
 
 def translitLOC():
-    textToConvert = sys.stdin.read()
+    text = sys.stdin.read()
 
-    translitBetaCode = betaCode.arabicToBetaCode(textToConvert)
+    if(getattr(args, 'delimited') != None):
+      textToConvert = getDelimited(text)
+      for match in textToConvert:
+        translitLOC = betaCode.betacodeToLOC(match)
+        text = text.replace('%' + match + '%', translitLOC)
 
-    translitLOC = betaCode.betacodeToLOC(translitBetaCode)
+    else:
+      text = betaCode.betacodeToLOC(text)
 
-    newText = translitLOC
-    sys.stdout.buffer.write(newText.encode('utf8'))
+    sys.stdout.buffer.write(text.encode('utf8'))
 
 def translitToSearch():
-    textToConvert = sys.stdin.read()
+    text = sys.stdin.read()
 
-    translitBetaCode = betaCode.arabicToBetaCode(textToConvert)
+    if(getattr(args, 'delimited') != None):
+      textToConvert = getDelimited(text)
+      for match in textToConvert:
+        translitSearch = betaCode.betacodeToSearch(match)
+        text = text.replace('%' + match + '%', translitSearch)
 
-    translitSearch = betaCode.betacodeToSearch(translitBetaCode)
+    else:
+      text = betaCode.betacodeToSearch(text)
 
-    newText = translitSearch
-    sys.stdout.buffer.write(newText.encode('utf8'))
+    sys.stdout.buffer.write(text.encode('utf8'))
 
 
 
@@ -49,6 +71,7 @@ parser.add_argument('--translitArabic', action='store_const', const=translitArab
 parser.add_argument('--translitOTO', action='store_const', const=translitOTO)
 parser.add_argument('--translitLOC', action='store_const', const=translitLOC)
 parser.add_argument('--translitToSearch', action='store_const', const=translitToSearch)
+parser.add_argument('--delimited', action='store_const', const=getDelimited)
 
 args = parser.parse_args()
 
