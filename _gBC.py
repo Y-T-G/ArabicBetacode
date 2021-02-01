@@ -10,7 +10,7 @@ def translitArabic():
 
     translitBetaCode = betaCode.arabicToBetaCode(textToConvert)
     newText = translitBetaCode
-    sys.stdout.write(newText)
+    sys.stdout.buffer.write(newText.encode('utf8'))
 
 
 def translitOTO():
@@ -22,7 +22,7 @@ def translitOTO():
     translitOTO = betaCode.betacodeToTranslit(translitBetaCode)
 
     newText = translitOTO
-    sys.stdout.write(newText)
+    sys.stdout.buffer.write(newText.encode('utf8'))
 
 def translitLOC():
     text = sys.stdin.read()
@@ -33,7 +33,7 @@ def translitLOC():
     translitLOC = betaCode.betacodeToLOC(translitBetaCode)
 
     newText = translitLOC
-    sys.stdout.write(newText)
+    sys.stdout.buffer.write(newText.encode('utf8'))
 
 def translitToSearch():
     text = sys.stdin.read()
@@ -44,7 +44,7 @@ def translitToSearch():
     translitSearch = betaCode.betacodeToSearch(translitBetaCode)
 
     newText = translitSearch
-    sys.stdout.write(newText)
+    sys.stdout.buffer.write(newText.encode('utf8'))
 
 
 
