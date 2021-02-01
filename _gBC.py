@@ -4,7 +4,7 @@ import argparse
 import sys
 
 def getDelimited(text):
-  return re.findall(r"(?<!\\)%(.*?)(?<!\\)%", text)
+  return re.findall(r"(?<!\\)%(.*?)(?<!\\)%", text, re.DOTALL)
 
 def translitArabic():
     text = sys.stdin.read()
