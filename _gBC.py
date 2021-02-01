@@ -4,9 +4,7 @@ import argparse
 import sys
 
 def translitArabic():
-    text = sys.stdin.read()
-
-    textToConvert = text
+    textToConvert = sys.stdin.read()
 
     translitBetaCode = betaCode.arabicToBetaCode(textToConvert)
     newText = translitBetaCode
@@ -14,8 +12,7 @@ def translitArabic():
 
 
 def translitOTO():
-    text = sys.stdin.read()
-    textToConvert = text
+    textToConvert = sys.stdin.read()
 
     translitBetaCode = betaCode.arabicToBetaCode(textToConvert)
 
@@ -25,8 +22,7 @@ def translitOTO():
     sys.stdout.buffer.write(newText.encode('utf8'))
 
 def translitLOC():
-    text = sys.stdin.read()
-    textToConvert = text
+    textToConvert = sys.stdin.read()
 
     translitBetaCode = betaCode.arabicToBetaCode(textToConvert)
 
@@ -36,8 +32,7 @@ def translitLOC():
     sys.stdout.buffer.write(newText.encode('utf8'))
 
 def translitToSearch():
-    text = sys.stdin.read()
-    textToConvert = text
+    textToConvert = sys.stdin.read()
 
     translitBetaCode = betaCode.arabicToBetaCode(textToConvert)
 
