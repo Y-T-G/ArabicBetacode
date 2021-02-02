@@ -3,18 +3,13 @@ import betaCode, betaCodeTables
 import argparse
 import sys
 
-def getDelimited(text):
-  return re.findall(r"(?<!\\)%(.*?)(?<!\\)%", text, re.DOTALL)
 
 def translitArabic():
     text = sys.stdin.read()
 
     if(getattr(args, 'delimited') != None):
-      textToConvert = getDelimited(text)
-      for match in textToConvert:
-        translitBetaCode = betaCode.arabicToBetaCode(match)
-        text = text.replace('%' + match + '%', translitBetaCode)
-
+      text = re.sub(r"(?<!\\)%(.*?)(?<!\\)%", lambda match: betaCode.arabicToBetaCode(match.group(1)), text, flags=re.DOTALL)
+    
     else:
       text = betaCode.arabicToBetaCode(text)
 
@@ -25,10 +20,7 @@ def translitOTO():
     text = sys.stdin.read()
 
     if(getattr(args, 'delimited') != None):
-      textToConvert = getDelimited(text)
-      for match in textToConvert:
-        translitOTO = betaCode.betacodeToTranslit(match)
-        text = text.replace('%' + match + '%', translitOTO)
+      text = re.sub(r"(?<!\\)%(.*?)(?<!\\)%", lambda match: betaCode.betacodeToTranslit(match.group(1)), text, flags=re.DOTALL)
 
     else:
       text = betaCode.betacodeToTranslit(text)
@@ -37,12 +29,9 @@ def translitOTO():
 
 def translitLOC():
     text = sys.stdin.read()
-
+	
     if(getattr(args, 'delimited') != None):
-      textToConvert = getDelimited(text)
-      for match in textToConvert:
-        translitLOC = betaCode.betacodeToLOC(match)
-        text = text.replace('%' + match + '%', translitLOC)
+      text = re.sub(r"(?<!\\)%(.*?)(?<!\\)%", lambda match: betaCode.betacodeToLOC(match.group(1)), text, flags=re.DOTALL)
 
     else:
       text = betaCode.betacodeToLOC(text)
@@ -53,16 +42,12 @@ def translitToSearch():
     text = sys.stdin.read()
 
     if(getattr(args, 'delimited') != None):
-      textToConvert = getDelimited(text)
-      for match in textToConvert:
-        translitSearch = betaCode.betacodeToSearch(match)
-        text = text.replace('%' + match + '%', translitSearch)
+      text = re.sub(r"(?<!\\)%(.*?)(?<!\\)%", lambda match: betaCode.betacodeToSearch(match.group(1)), text, flags=re.DOTALL)
 
     else:
       text = betaCode.betacodeToSearch(text)
 
     sys.stdout.buffer.write(text.encode('utf8'))
-
 
 
 parser = argparse.ArgumentParser()
@@ -71,7 +56,7 @@ parser.add_argument('--translitArabic', action='store_const', const=translitArab
 parser.add_argument('--translitOTO', action='store_const', const=translitOTO)
 parser.add_argument('--translitLOC', action='store_const', const=translitLOC)
 parser.add_argument('--translitToSearch', action='store_const', const=translitToSearch)
-parser.add_argument('--delimited', action='store_const', const=getDelimited)
+parser.add_argument('--delimited', action='store_const', const='delimited')
 
 args = parser.parse_args()
 
