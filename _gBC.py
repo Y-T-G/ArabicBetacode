@@ -2,10 +2,10 @@ import os, re
 import betaCode, betaCodeTables
 import argparse
 import sys
-
+import io
 
 def translitArabic():
-    text = sys.stdin.read()
+    text = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8').read()
 
     if(getattr(args, 'delimited') != None):
       text = re.sub(r"(?<!\\)%(.*?)(?<!\\)%", lambda match: betaCode.arabicToBetaCode(match.group(1)), text, flags=re.DOTALL)
@@ -17,7 +17,7 @@ def translitArabic():
 
 
 def translitOTO():
-    text = sys.stdin.read()
+    text = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8').read()
 
     if(getattr(args, 'delimited') != None):
       text = re.sub(r"(?<!\\)%(.*?)(?<!\\)%", lambda match: betaCode.betacodeToTranslit(match.group(1)), text, flags=re.DOTALL)
@@ -28,7 +28,7 @@ def translitOTO():
     sys.stdout.buffer.write(text.encode('utf8'))
 
 def translitLOC():
-    text = sys.stdin.read()
+    text = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8').read()
 	
     if(getattr(args, 'delimited') != None):
       text = re.sub(r"(?<!\\)%(.*?)(?<!\\)%", lambda match: betaCode.betacodeToLOC(match.group(1)), text, flags=re.DOTALL)
@@ -39,7 +39,7 @@ def translitLOC():
     sys.stdout.buffer.write(text.encode('utf8'))
 
 def translitToSearch():
-    text = sys.stdin.read()
+    text = io.TextIOWrapper(sys.stdin.buffer, encoding='utf-8').read()
 
     if(getattr(args, 'delimited') != None):
       text = re.sub(r"(?<!\\)%(.*?)(?<!\\)%", lambda match: betaCode.betacodeToSearch(match.group(1)), text, flags=re.DOTALL)
